@@ -67,15 +67,15 @@ export default function AdminLoginPage() {
     <main
       className={`${inter.className} min-h-screen bg-white text-neutral-900 flex items-center justify-center px-5 py-10 sm:px-8 md:px-12`}
     >
-      <div className="w-full max-w-[1280px] flex flex-col lg:flex-row items-center justify-center gap-14 lg:gap-18 xl:gap-24">
+      <div className="w-full grid md:grid-cols-2 lg:flex-row items-center justify-center gap-14 lg:gap-18 xl:gap-24">
         {/* Left: informational card */}
-        <div className="w-full shrink-0 flex justify-center lg:justify-end lg:flex-1 min-w-0">
-          <div className="w-full max-w-[520px] rounded-[12px] border border-neutral-200/90 bg-white p-6 sm:p-7">
+        <div className="w-full shrink-0 flex justify-center lg:justify-end lg:flex-1 min-w-0 p-10">
+          <div className="w-full rounded-xl border border-black bg-white p-6 sm:p-7">
             <div
               className="overflow-hidden rounded-[10px] w-full"
-              style={{
-                aspectRatio: `${IMAGE_WIDTH} / ${IMAGE_HEIGHT}`,
-              }}
+              // style={{
+              //   aspectRatio: `${IMAGE_WIDTH} / ${IMAGE_HEIGHT}`,
+              // }}
             >
               <Image
                 src="/images/ham2.JPEG"
@@ -88,10 +88,10 @@ export default function AdminLoginPage() {
               />
             </div>
             <div className="pt-7 px-1 pb-1 text-center">
-              <h2 className="text-base font-bold text-black tracking-tight">
+              <h2 className="text-4xl text-black tracking-tight">
                 Hanberry Beauty
               </h2>
-              <p className="mt-3 text-[13px] sm:text-sm leading-[1.65] text-neutral-500">
+              <p className="mt-3 text-sm leading-[1.65] text-black md:w-2/3 mx-auto">
                 Refined control over your beauty business — manage bookings,
                 update services, and curate your latest artistry with elegance.
               </p>
@@ -106,18 +106,18 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Right: login form */}
-        <div className="w-full lg:flex-1 flex flex-col justify-center min-w-0 max-w-[560px] lg:max-w-[620px] xl:max-w-[680px]">
+        <div className="w-full lg:flex-1 flex flex-col justify-center min-w-0 ">
           <div className={`${poltawskiNowy.className} text-black`}>
-            <h1 className="text-[1.75rem] sm:text-[1.95rem] lg:text-[2.125rem] xl:text-[2.25rem] leading-[1.2] font-medium tracking-[0.04em] text-balance">
+            <h1 className="text-[1.75rem] sm:text-[1.95rem] lg:text-[2.125rem] xl:text-5xl leading-[1.2] font-medium tracking-[0.04em] text-balance">
               Enter your credentials to continue
             </h1>
+            <p className="mt-5 text-lg leading-relaxed">
+              A private space to curate your services, bookings, and signature beauty work.
+            </p>
           </div>
-          <p className="mt-5 text-sm text-neutral-500 leading-relaxed">
-            A private space to curate your services, bookings, and signature
-            beauty work.
-          </p>
+          
 
-          <form onSubmit={onSubmit} className="mt-11 w-full space-y-8">
+          <form onSubmit={onSubmit} className="mt-11 w-full space-y-8 max-w-[560px] lg:max-w-[620px] xl:max-w-[680px]">
             <div className="space-y-2.5">
               <label
                 htmlFor="admin-email"
@@ -130,7 +130,7 @@ export default function AdminLoginPage() {
                 type="email"
                 autoComplete="username"
                 placeholder="Enter your email here"
-                className="w-full border border-neutral-200 rounded-md px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-300 focus:border-neutral-300"
+                className="w-full border border-black px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-300 focus:border-[#D8A48F]"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -148,7 +148,7 @@ export default function AdminLoginPage() {
                 type="password"
                 autoComplete="current-password"
                 placeholder="Enter your password here"
-                className="w-full border border-neutral-200 rounded-md px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-300 focus:border-neutral-300"
+                className="w-full border border-black px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-300 focus:border-[#D8A48F]"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -163,9 +163,9 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-black text-white py-3.5 text-sm font-medium rounded-md hover:bg-neutral-900 disabled:opacity-60 transition-colors"
+              className="w-full bg-black text-white py-3.5 text-sm font-medium hover:bg-neutral-900 disabled:opacity-60 transition-colors cursor-pointer"
             >
-              {loading ? "Signing in…" : "Login"}
+              {loading ? "Logging in…" : "Login"}
             </button>
           </form>
         </div>

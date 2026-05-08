@@ -18,6 +18,7 @@ import {
   NewPackageInput,
   TabKey,
 } from "@/components/admin/types";
+import AdminWorksPanel from "@/components/admin/AdminWorksPanel";
 
 const tabs: TabKey[] = ["Dashboard", "Packages", "Bookings", "Works", "Gallery", "History", "Setting"];
 const poppins = Poppins({
@@ -281,6 +282,11 @@ export default function AdminPage() {
             onUpdateStatus={updateBookingStatus}
           />
         ) : null}
+
+        {activeTab === "Works" ? (
+          <AdminWorksPanel />
+        ) : null}
+
       </section>
     </main>
   );
