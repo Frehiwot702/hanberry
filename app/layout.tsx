@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Quicksand } from "next/font/google";
+// import { Geist, Geist_Mono, Quicksand } from "next/font/google";
 import { salvager } from "./lib/fonts";
 import "./globals.css";
 

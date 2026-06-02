@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
-import { BookingRequest } from "./types";
+import { Booking } from "@/app/services/booking.servce";
+import { launchSuccessConfetti } from "@/lib/confetti";
 
 interface AdminBookingsPanelProps {
-  requests: BookingRequest[];
+  requests: Booking[];
   loading: boolean;
-  onUpdateStatus: (id: number, status: "pending" | "confirmed" | "rejected" | "done") => Promise<void>;
+  onUpdateStatus: (id: string, status: "confirmed" | "rejected" | "done") => Promise<void>;
 }
 
 export function AdminBookingsPanel({ requests, loading, onUpdateStatus }: AdminBookingsPanelProps) {
@@ -20,25 +20,26 @@ export function AdminBookingsPanel({ requests, loading, onUpdateStatus }: AdminB
     return requests.filter((r) => {
       if (r.status !== "pending") return false;
       if (!q) return true;
-      return r.full_name.toLowerCase().includes(q) || r.phone.includes(q);
+      return r.fullname.toLowerCase().includes(q) || r.phone.includes(q);
     });
   }, [requests, pendingSearch]);
 
   const confirmedRequests = useMemo(() => {
     const q = confirmedSearch.toLowerCase().trim();
     return requests.filter((r) => {
-      if (r.status !== "confirmed" && r.status !== "done") return false;
+      if (r.status !== "confirmed") return false;
       if (!q) return true;
-      return r.full_name.toLowerCase().includes(q) || r.phone.includes(q);
+      return r.fullname.toLowerCase().includes(q) || r.phone.includes(q);
     });
   }, [requests, confirmedSearch]);
 
   const pendingCount = requests.filter((r) => r.status === "pending").length;
-  const confirmedCount = requests.filter((r) => r.status === "confirmed" || r.status === "done").length;
+  const confirmedCount = requests.filter((r) => r.status === "confirmed").length;
 
-  async function handleDone(id: number) {
+  async function handleDone(id: string) {
     await onUpdateStatus(id, "done");
     setShowCompletedModal(true);
+    launchSuccessConfetti();
   }
 
   return (
@@ -95,20 +96,22 @@ export function AdminBookingsPanel({ requests, loading, onUpdateStatus }: AdminB
             </button>
 
             <div className="pt-8">
-              <div className="mx-auto w-fit">
-                <Image
-                  src="/images/Completed.png"
+              <div className="mx-auto w-fit relative">
+                {/* <Image
+                  src="/Completed.png"
                   alt="Completed"
                   width={340}
                   height={110}
-                  className="h-auto w-auto"
+                  className="h-auto w-auto absolute"
                   priority
-                />
+                /> */}
+                <div className="mx-auto h-28 w-28 rounded-full bg-[#E6EFE4] flex items-center justify-center">
+                  <span className="text-[68px] font-bold leading-none text-[#60D468]">✓</span>
+                </div>
               </div>
-              <div className="mx-auto mt-5 h-36 w-36 rounded-full bg-[#E6EFE4] flex items-center justify-center">
-                <span className="text-[88px] leading-none text-[#60D468]">✓</span>
-              </div>
-              <p className="mt-8 text-[18px] text-black/60">
+              <h3 className="text-2xl font-bold mt-8">Work Completed!</h3>
+              
+              <p className=" text-[16px] text-black/60">
                 You can view completed works in history section
               </p>
             </div>
@@ -153,25 +156,27 @@ function BookingsTable({
   onReject,
   onDone,
 }: {
-  rows: BookingRequest[];
+  rows: Booking[];
   loading: boolean;
   pending?: boolean;
-  onAccept: (id: number) => void;
-  onReject: (id: number) => void;
-  onDone: (id: number) => void;
+  onAccept: (id: string) => void;
+  onReject: (id: string) => void;
+  onDone: (id: string) => void;
 }) {
   return (
-    <div className="mt-4 rounded-2xl overflow-hidden border border-black/10">
+    <div className="mt-4 rounded-2xl overflow-hidden border border-black/10 flex overflow-x-auto overflow-y-auto max-h-[600px]">
       <table className="w-full text-left">
         <thead className="bg-black/5 text-[16px]">
           <tr>
-            <th className="px-4 py-3">ID</th>
+            {/* <th className="px-4 py-3">ID</th> */}
             <th className="px-4 py-3">Customer Name</th>
             <th className="px-4 py-3">Phone Number</th>
             <th className="px-4 py-3">Person Quantity</th>
             <th className="px-4 py-3">Package</th>
-            <th className="px-4 py-3">Duration</th>
-            {pending ? <th className="px-4 py-3">Status</th> : null}
+            <th className="px-4 py-3">Package Price</th>
+            <th className="px-4 py-3">Appointment Date</th>
+            <th className="px-4 py-3">Total</th>
+            <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Action</th>
           </tr>
         </thead>
@@ -191,20 +196,29 @@ function BookingsTable({
           ) : (
             rows.map((row) => (
               <tr key={row.id} className="border-t border-black/10">
-                <td className="px-4 py-3">{row.id}</td>
-                <td className="px-4 py-3">{row.full_name}</td>
+                {/* <td className="px-4 py-3">{row.id}</td> */}
+                <td className="px-4 py-3">{row.fullname}</td>
                 <td className="px-4 py-3">{row.phone}</td>
-                <td className="px-4 py-3">{row.person_quantity}</td>
-                <td className="px-4 py-3">{row.package_name}</td>
-                <td className="px-4 py-3">{row.duration || "-"}</td>
+                <td className="px-4 py-3">{row.quantity}</td>
+                <td className="px-4 py-3">{row.package.name}</td>
+                <td className="px-4 py-3">{row.package.price}</td>
+                <td className="px-4 py-3">{row.date}</td>
+                <td className="px-4 py-3">{row.totalPrice} ETB</td>
                 {pending ? (
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-[#D7AE39]" />
+                      <span className="h-2 w-2 rounded-full bg-[#80d739]" />
                       Pending
                     </span>
                   </td>
-                ) : null}
+                ) : 
+                <td className="px-4 py-3">
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-[#D7AE39]" />
+                    Confirmed
+                  </span>
+                </td>
+                }
                 <td className="px-4 py-3">
                   {pending ? (
                     <div className="flex gap-2">
@@ -221,9 +235,11 @@ function BookingsTable({
                     </button>
                   )}
                 </td>
-              </tr>
+              </tr>  
             ))
+            
           )}
+          
         </tbody>
       </table>
     </div>

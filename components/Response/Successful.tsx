@@ -2,14 +2,13 @@ import Image from 'next/image';
 import React from 'react'
 
 const Successful = ({pkge, name, email, phone, date, quantity, totalPrice, onClose}: {pkge: {
-    id: number,
-    name: string,
-    type: string,
+    id: string,
+    name: string, 
     includes: string[],
     description: string,
-    price: number,
-    background: string,
+    price: number, 
     duration: string,
+    optional_notes: string
 }, name: string, email: string | null, phone: string, date: string, quantity: number, totalPrice: number, onClose: () => void}) => {
 
     const getDayAndMonth = (dateString: string) => {
@@ -34,7 +33,7 @@ const Successful = ({pkge, name, email, phone, date, quantity, totalPrice, onClo
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-scroll bg-black/50 px-1 py-10 md:p-5'>
         <div style={{backgroundImage: 'url(/summary-background.jpg)', backgroundColor: '#ffffff'}} className='text-black bg-cover bg-no-repeat md:w-4/5 mx-auto my-auto rounded-xl grid md:grid-cols-3 gap-10 p-5 md:px-10 pt-16'>
             <div className='text-center mb-10 col-span-2 md:pl-8'>
-                <h3 className='text-2xl md:text-5xl font-bold text-start mb-2'>Thank you for your booking.</h3>
+                <h3 className='text-2xl md:text-5xl font-bold text-start mb-2'>Your Booking Has Been Received!</h3>
                 <h3 className='text-md text-start'>The makeup artist will contact you directly to confirm the details</h3>
                 <div className='flex w-full space-x-3 items-center justify-center my-10 text-center'>
                     <div className='absolute z-50 items-end justify-center'>

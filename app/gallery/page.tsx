@@ -3,19 +3,26 @@ import Masonry from '@/components/Masonry';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
+import { subscribeGallery, Gallery as GalleryT } from '../services/gallery.service';
 
-type Item = { id: number; image_url: string; height: number; type: string };
+// type Item = { id: number; image_url: string; height: number; type: string };
 
 const Gallery = () => {
-  const [title, setTitle] = useState('Gallery');
-  const [images, setImages] = useState<Item[]>([]);
+  // const [title, setTitle] = useState('Gallery');
+  const [images, setImages] = useState<GalleryT[]>([]);
+  
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('/api/public/gallery').then((r) => r.json()).then((data) => {
-      if (data?.content?.title) setTitle(data.content.title);
-      setImages(Array.isArray(data?.images) ? data.images : []);
-    }).catch(() => setImages([]));
+  useEffect(() => { 
+      const unsubscribe = subscribeGallery((data) => { setImages(data || []); setLoading(false); });
+      return () => unsubscribe();
   }, []);
+
+  if(loading) {
+    return (
+      <div>loading gallery...</div>
+    )
+  }
 
   return (
     <div className='bg-white text-black pt-10 pb-12 md:pb-16 lg:pb-20'>
@@ -29,10 +36,10 @@ const Gallery = () => {
           </div>
           <div className='mx-auto flex items-start justify-center py-10'>
               <motion.h1 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-4xl md:text-6xl mb-10 md:mb-8 text-black" style={{fontFamily: 'salvager'}}>
-                {title}
+                Gallery
               </motion.h1>
           </div>
-          <Masonry items={images.map((i) => ({ id: String(i.id), img: i.image_url, height: i.height, type: i.type }))} ease="power3.out" duration={0.6} stagger={0.05} animateFrom="bottom" scaleOnHover={true} hoverScale={0.95} blurToFocus={true} colorShiftOnHover={false} />
+          <Masonry items={images.map((i) => ({ id: String(i.id), img: i.imageUrl, height: i.height }))} ease="power3.out" duration={0.6} stagger={0.05} animateFrom="bottom" scaleOnHover={true} hoverScale={0.95} blurToFocus={true} colorShiftOnHover={false} />
         </div>
     </div>
   )

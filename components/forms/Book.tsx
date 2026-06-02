@@ -2,18 +2,18 @@
 import React, { useState } from 'react'
 import Successful from '../Response/Successful';
 import Link from 'next/link';
+import { AddBookingRequest, createBooking } from '@/app/services/booking.servce';
 
 
 
 const Book = ({pkg, onClose} : {pkg: {
-    id: number,
-    name: string,
-    type: string,
+    id: string,
+    name: string, 
     includes: string[],
     description: string,
-    price: number,
-    background: string,
-    duration: string
+    price: number, 
+    duration: string,
+    optional_notes: string
 }, onSuccess: () => void, onClose: () => void}) => {
 
     console.log('package selected: ', pkg)
@@ -54,31 +54,26 @@ const Book = ({pkg, onClose} : {pkg: {
             e.preventDefault();
             setLoading(true);
             setError('');
-            const payload = { 
+
+            const payload: AddBookingRequest = { 
                 fullname, 
                 phone, 
                 date, 
                 quantity,
-                packageName: pkg.name,
-                packagePrice: pkg.price,
-                packageType: pkg.type,
+                package: {
+                    id: pkg.id,
+                    name: pkg.name,
+                    price: pkg.price
+                }, 
                 duration: pkg.duration,
                 email: email || null,
-                totalPrice,
-                includes: pkg.includes
+                totalPrice, 
             };
             
-            await fetch('/api/public/bookings', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-
-            await fetch('/api/send-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            })
+             
+            await createBooking(payload);
+            
+             
             setLoading(false)
             setSuccess(true);
 
@@ -91,10 +86,19 @@ const Book = ({pkg, onClose} : {pkg: {
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-scroll bg-black/50 p-5'>
-        <div className='bg-gradient-to-b md:bg-gradient-to-br from-[#C19F98] via-[#ffffff] to-[#ffffff] text-black w-full md:w-4/5 mx-auto my-auto rounded-xl grid md:grid-cols-2 gap-10 p-5 md:px-10 py-16'>
+        <div className='bg-white text-black w-full md:w-4/5 mx-auto my-auto rounded-xl grid md:grid-cols-2 gap-10 p-5 md:px-10 py-16'>
             <div className='flex flex-col  justify-between h-full'>
 
                 <div>
+                    <div>
+                        <img
+                            src='./images/o9-9.jpg'
+                            alt='Package Image'
+                            width={500}
+                            height={300}
+                            className='w-full h-[300px] md:h-[450px] object-cover rounded-lg mb-5'
+                        />
+                    </div>
                     <h3 
                         className='text-3xl md:text-5xl font-extrabold'
                         style={{fontFamily: 'salvager'}}
@@ -165,7 +169,7 @@ const Book = ({pkg, onClose} : {pkg: {
                         />
                     </div>
                     <div>
-                        <h3 className='font-semibold'>Pick your date</h3>
+                        <h3 className='font-semibold'>Appointment Date</h3>
                         <input
                             type='date'
                             onChange={(e) => {setDate(e.target.value)}}
@@ -174,7 +178,7 @@ const Book = ({pkg, onClose} : {pkg: {
                         />
                     </div>
                     <div>
-                        <h3 className='font-semibold'>Person Quantity</h3>
+                        <h3 className='font-semibold'>How Many People Need Makeup Services?</h3>
                         <div className='flex items-center space-x-3'>
                             <button 
                                 type='button' 

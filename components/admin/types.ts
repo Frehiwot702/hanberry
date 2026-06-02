@@ -1,3 +1,5 @@
+import { Category } from "@/app/services/category.service";
+
 export type DashboardMetrics = {
   bookings: number;
   activePackages: number;
@@ -7,8 +9,7 @@ export type TabKey = "Dashboard" | "Packages" | "Bookings" | "Works" | "Gallery"
 
 export type BookingCategory = {
   id: number;
-  name: string;
-  sort_order: number;
+  name: string; 
   active: boolean;
 };
 
@@ -30,7 +31,7 @@ export type BookingPackage = {
 export type BookingCategoryGroup = BookingCategory & { packages: BookingPackage[] };
 
 export type BookingDataResponse = {
-  categories: BookingCategory[];
+  categories: Category[];
   packages: BookingPackage[];
   grouped: BookingCategoryGroup[];
 };
