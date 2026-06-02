@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { fetchCategories } from "@/app/services/category.service";
 
 export async function GET() {
   const session = await getAdminSession();
@@ -18,7 +19,7 @@ export async function GET() {
     return NextResponse.json({ error: "Failed to load booking data" }, { status: 500 });
   }
 
-  const categories = categoriesRes.data ?? [];
+  const categories = await fetchCategories() ?? [];
   const packages = packagesRes.data ?? [];
   const grouped = categories.map((category) => ({
     ...category,

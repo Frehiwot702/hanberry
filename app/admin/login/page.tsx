@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Inter, Poltawski_Nowy } from "next/font/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,19 +43,27 @@ export default function AdminLoginPage() {
     }
 
     try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email.trim(), password }),
-      });
+      // const res = await fetch("/api/admin/login", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ username: email.trim(), password }),
+      // });
 
-      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      // const data = (await res.json().catch(() => ({}))) as { error?: string };
 
-      if (!res.ok) {
-        setError(data.error ?? "Invalid credentials");
-        setLoading(false);
-        return;
-      }
+      // if (!res.ok) {
+      //   setError(data.error ?? "Invalid credentials");
+      //   setLoading(false);
+      //   return;
+      // }
+
+      const res = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+
+      console.log({res})
 
       router.replace("/admin");
       router.refresh();
@@ -92,15 +102,12 @@ export default function AdminLoginPage() {
                 Hanberry Beauty
               </h2>
               <p className="mt-3 text-sm leading-[1.65] text-black md:w-2/3 mx-auto">
-                Refined control over your beauty business — manage bookings,
-                update services, and curate your latest artistry with elegance.
+                Luxury makeup artistry crafted with elegance, precision, and timeless beauty.
               </p>
               <Link
                 href="/"
                 className="mt-7 inline-block text-sm font-medium text-[#E5A9B8] hover:text-[#D895A8] transition-colors"
-              >
-                Visit site
-              </Link>
+              > Explore Beauty </Link>
             </div>
           </div>
         </div>

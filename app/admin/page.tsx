@@ -8,19 +8,23 @@ import { AdminTabs } from "@/components/admin/AdminTabs";
 import { AdminDashboardPanel } from "@/components/admin/AdminDashboardPanel";
 import { AdminPackagesPanel } from "@/components/admin/AdminPackagesPanel";
 import { AdminBookingsPanel } from "@/components/admin/AdminBookingsPanel";
-import {
-  BookingRequest,
-  BookingCategory,
-  BookingCategoryGroup,
-  BookingDataResponse,
-  BookingPackage,
-  DashboardMetrics,
-  NewPackageInput,
+import { 
+  DashboardMetrics, 
   TabKey,
 } from "@/components/admin/types";
 import AdminWorksPanel from "@/components/admin/AdminWorksPanel";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { AddPackageRequest, BookingCategoryGroup, createPackage, fetchPackages, groupPackagesByCategory, Package, removePackage, subscribePackages, updatePackage } from "../services/package.service";
+import { Category, createCategory, deleteCategoryCascade, fetchCategories, removeCategory, subscribeCategories, updateCategory } from "../services/category.service";
+import { Booking, fetchBookings, subscribeBookingRequests, updateBooking } from "../services/booking.servce";
+import { AdminHistoryPanel } from "@/components/admin/AdminHistoryPanel";
+import { fetchWorks, Work, subscribeWorks } from "../services/works.service";
+import { fetchGallery, Gallery, subscribeGallery } from "../services/gallery.service";
+import AdminGalleryPanel from "@/components/admin/AdminGalleryPanel";
 
-const tabs: TabKey[] = ["Dashboard", "Packages", "Bookings", "Works", "Gallery", "History", "Setting"];
+
+const tabs: TabKey[] = ["Dashboard", "Packages", "Bookings", "Works", "Gallery", "History"];
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -33,91 +37,182 @@ export default function AdminPage() {
   const [authChecking, setAuthChecking] = useState(true);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [metrics, setMetrics] = useState<DashboardMetrics>({ bookings: 0, activePackages: 0 });
-  const [categories, setCategories] = useState<BookingCategory[]>([]);
-  const [packages, setPackages] = useState<BookingPackage[]>([]);
-  const [groupedCategories, setGroupedCategories] = useState<BookingCategoryGroup[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+  // const [groupedCategories, setGroupedCategories] = useState<[]>([]);
   const [loadingPackages, setLoadingPackages] = useState(false);
-  const [bookingRequests, setBookingRequests] = useState<BookingRequest[]>([]);
+  const [bookingRequests, setBookingRequests] = useState<Booking[]>([]);
+  const [history, setHistory] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-  const [expandedPackageId, setExpandedPackageId] = useState<number | null>(null);
+  const [order, setOrder] = useState("");
+  const [expandedPackageId, setExpandedPackageId] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState("");
 
+  const [works, setWorks] = useState<Work[]>([]);
+  const [gallery, setGallery] = useState<Gallery[]>([]);
+
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    let cancelled = false;
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        async (user) => {
 
-    async function init() {
-      try {
-        const sessionRes = await fetch("/api/admin/session", { cache: "no-store" });
-        const session = (await sessionRes.json()) as { authenticated?: boolean };
+          if (!user) {
+            router.replace("/admin/login");
+            return;
+          }
 
-        if (!sessionRes.ok || !session.authenticated) {
-          router.replace("/admin/login");
-          return;
+          try {
+            await loadDashboard(false);
+
+          } catch (error) {
+            console.log(error);
+
+          } finally {
+            setAuthChecking(false);
+            setLoadingMetrics(false);
+          }
         }
+      );
 
-        await loadDashboard(cancelled);
-      } catch {
-        router.replace("/admin/login");
-      } finally {
-        if (!cancelled) {
-          setAuthChecking(false);
-          setLoadingMetrics(false);
-        }
-      }
-    }
+    return () => unsubscribe();
 
-    init();
-
-    return () => {
-      cancelled = true;
-    };
   }, [router]);
 
   useEffect(() => {
-    if (activeTab !== "Packages") return;
+    if (activeTab !== "Packages" && activeTab !== "Dashboard") return;
     loadPackagesData();
   }, [activeTab]);
 
   useEffect(() => {
-    if (activeTab !== "Bookings") return;
+    if (activeTab !== "Bookings" && activeTab !== "History" && activeTab !== "Dashboard") return;
     loadBookingsData();
   }, [activeTab]);
 
-  async function loadDashboard(cancelled: boolean) {
-    const dashboardRes = await fetch("/api/admin/dashboard", { cache: "no-store" });
-    if (!dashboardRes.ok) return;
+  useEffect(() => {
+    if (activeTab !== "Works") return;
+    loadWorksData();
+  }, [activeTab]);
 
-    const data = (await dashboardRes.json()) as DashboardMetrics;
+  useEffect(() => {
+    if (activeTab !== "Gallery") return;
+    loadGalleryData();
+  }, [activeTab]);
+
+  // for updating categories data when changed
+  useEffect(() => { 
+    const unsubscribe =
+      subscribeCategories(
+        (data) => {
+          setCategories(data);
+        }
+      );
+    return () => unsubscribe(); 
+  }, []);
+
+  // for updating packages data when changed
+  useEffect(() => {
+    const unsubscribe =
+      subscribePackages(
+        (data) => {
+          setPackages(data);
+        }
+      );
+    return () => unsubscribe(); 
+  }, []);
+
+  // for updating booking requests data when changed
+  useEffect(() => { 
+    const unsubscribe =
+      subscribeBookingRequests(
+        (data) => {
+          setBookingRequests(data);
+        }
+      );
+    return () => unsubscribe(); 
+  }, [bookingRequests]);
+
+  // for updating works images data when changed
+  useEffect(() => { 
+    const unsubscribe =
+      subscribeWorks(
+        (data) => {
+          setWorks(data);
+        }
+      );
+    return () => unsubscribe(); 
+  }, []);
+
+  // for updating gallery images data when changed
+  useEffect(() => { 
+    const unsubscribe =
+      subscribeGallery(
+        (data) => {
+          setGallery(data);
+        }
+      );
+    return () => unsubscribe(); 
+  }, []);
+
+  async function loadDashboard(cancelled: boolean) {
+
+    const pendingBooking = bookingRequests.filter((booking) => booking.status === "pending");
+    const activePackages = packages.filter((pkg) => pkg.status === "active");
+    console.log({packages});
+    console.log({activePackages});
+
     if (!cancelled) {
       setMetrics({
-        bookings: data.bookings ?? 0,
-        activePackages: data.activePackages ?? 0,
+        bookings: pendingBooking.length ?? 0,
+        activePackages: activePackages.length ?? 0,
       });
     }
   }
 
   async function loadPackagesData() {
-    setLoadingPackages(true);
-    setInfoMessage("");
-    try {
-      const bookingRes = await fetch("/api/admin/booking", { cache: "no-store" });
-      if (!bookingRes.ok) {
-        setInfoMessage("Failed to load packages data.");
-        return;
-      }
 
-      const bookingData = (await bookingRes.json()) as BookingDataResponse;
-      const safeCategories = Array.isArray(bookingData.categories) ? bookingData.categories : [];
-      const safePackages = Array.isArray(bookingData.packages) ? bookingData.packages : [];
-      const safeGrouped = Array.isArray(bookingData.grouped) ? bookingData.grouped : [];
-      setCategories(safeCategories);
-      setPackages(safePackages);
-      setGroupedCategories(safeGrouped);
-      setExpandedPackageId(safePackages[0]?.id ?? null);
-    } catch {
-      setInfoMessage("Failed to load packages data.");
+    setLoadingPackages(true);
+
+    setInfoMessage("");
+
+    try {
+
+      const [ categoriesData, packagesData, bookingData ] = await Promise.all([ fetchCategories(), fetchPackages(), fetchBookings()]);
+
+      const grouped = groupPackagesByCategory( categoriesData, packagesData );
+      console.log({grouped});
+
+      setCategories(categoriesData);
+
+      setPackages(packagesData);
+
+      const activePackages = packagesData.filter((pkg) => pkg.status === "active");
+      const pendingBooking = bookingData.filter((booking) => booking.status === "pending");
+
+      setMetrics({ 
+        bookings: pendingBooking.length ?? 0,
+        activePackages: activePackages.length ?? 0,
+      })
+
+      // setGroupedCategories(grouped);
+
+      setExpandedPackageId(
+        packagesData[0]?.id ?? null
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+      setInfoMessage(
+        "Failed to load packages data."
+      );
+
     } finally {
+
       setLoadingPackages(false);
     }
   }
@@ -125,14 +220,12 @@ export default function AdminPage() {
   async function loadBookingsData() {
     setLoadingBookings(true);
     try {
-      const res = await fetch("/api/admin/bookings", { cache: "no-store" });
-      if (!res.ok) {
-        setInfoMessage("Failed to load bookings data.");
-        return;
-      }
+      const res = await fetchBookings();
+      setBookingRequests(res);
 
-      const data = (await res.json()) as BookingRequest[];
-      setBookingRequests(Array.isArray(data) ? data : []);
+      const filtered = res.filter((book) => book.status === "done" || book.status === "rejected");
+      setHistory(filtered);
+
     } catch {
       setInfoMessage("Failed to load bookings data.");
     } finally {
@@ -140,111 +233,196 @@ export default function AdminPage() {
     }
   }
 
-  async function addCategory(nameOverride?: string) {
-    const name = (nameOverride ?? newCategory).trim();
-    if (!name) return;
-    const res = await fetch("/api/admin/booking/categories", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        sort_order: categories.length,
-        active: true,
-      }),
-    });
-    if (res.ok) {
-      setNewCategory("");
-      await loadPackagesData();
+  async function loadWorksData() {
+    setLoading(true);
+    try {
+      const res = await fetchWorks();
+      setWorks(res); 
+
+      setLoading(false);
+
+    } catch {
+      setInfoMessage("Failed to load works data.");
+    } finally {
+      setLoading(false);
     }
   }
 
-  async function editCategory(category: BookingCategory, nextName: string) {
-    const trimmed = nextName.trim();
-    if (!trimmed) return;
-    await fetch(`/api/admin/booking/categories/${category.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...category,
-        name: trimmed,
-      }),
-    });
-    await loadPackagesData();
+  async function loadGalleryData() {
+    setLoading(true);
+    try {
+      const res = await fetchGallery();
+      setGallery(res); 
+
+      setLoading(false);
+
+    } catch {
+      setInfoMessage("Failed to load gallery data.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  async function deleteCategory(categoryId: number) {
-    await fetch(`/api/admin/booking/categories/${categoryId}`, { method: "DELETE" });
-    await loadPackagesData();
+  //  CATEGORY CUD
+
+  async function addCategory( nameOverride: string, order: string) {
+
+    const name = ( nameOverride ?? newCategory ).trim();
+
+    if (!name || !order) {
+      setInfoMessage("Please fill all fields to proceed.")
+      return;
+    };
+
+    try {
+      setLoading(true);
+      await createCategory({ name: name, status: "active", order: order });
+      setNewCategory("");
+      setOrder("");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to add category." );
+    }
   }
 
-  async function addPackage(input?: NewPackageInput) {
-    const targetCategoryId = input?.category_id ?? categories[0]?.id;
+  async function editCategory(categoryId: string, updates: { name: string; status?: "active" | "inactive", order: number}) {
+    try { 
+      setLoading(true);
+      await updateCategory(categoryId, updates)
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to edit category." );
+    }
+  }
+
+  async function deleteCategory(categoryId: string) {
+    try { 
+      setLoading(true);
+      const relatedPackages =
+        packages.filter(
+          (pkg) => pkg.categoryId === categoryId
+        );
+
+      if (relatedPackages.length > 0) {
+
+        const confirmed = window.confirm(
+            `This category contains ${relatedPackages.length} package(s). Deleting it will also remove all related packages permanently.`
+          );
+
+        if (confirmed) {
+          await deleteCategoryCascade( categoryId );
+        } else {
+          return;
+        };
+      }
+      await removeCategory(categoryId);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to delete category." );
+    }
+  }
+
+
+  //  PACKAGE CUD
+
+  async function addPackage(pkg: AddPackageRequest) {
+    const targetCategoryId = pkg?.categoryId ?? categories[0]?.id;
     if (!targetCategoryId) {
       setInfoMessage("Create a category first.");
       return;
     }
 
-    const includes = input?.includes ?? [];
-    const payload = {
-      category_id: targetCategoryId,
-      name: input?.name?.trim() || "New Package",
-      type: input?.type?.trim() || "normal",
-      description: input?.description?.trim() || "Describe your package here.",
-      price: Number.isFinite(input?.price) ? Math.max(0, Math.round(input!.price)) : 0,
-      duration: input?.duration?.trim() || "2-3 hr",
-      optional_note: null,
-      includes: includes.filter((v) => v.trim()).map((v) => v.trim()),
-      image_url: null,
-      sort_order: packages.length,
-      active: true,
-    };
-    const res = await fetch("/api/admin/booking/packages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (res.ok) {
-      await loadPackagesData();
+    if (!pkg) {
+      setInfoMessage("Fill all input fields to add package");
+      return;
+    }
+
+    console.log({pkg})
+
+    try {
+      setLoading(true);
+
+      await createPackage({ 
+        name: pkg.name,
+        description: pkg.description,
+        price: pkg.price,
+        duration: pkg.duration,
+        includes: pkg.includes,
+        optional_notes: pkg.optional_notes,
+        categoryId: pkg.categoryId,
+        status: pkg.status,
+        category: {
+          name: pkg.category.name,
+          status: pkg.category.status
+        }
+      });
+      setNewCategory("");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to add package." );
+    }
+    
+  }
+
+  async function editPackage(pkgId: string, updates: AddPackageRequest) {
+    console.log({updates});
+    const targetCategoryId = updates?.categoryId ?? categories[0]?.id;
+    if (!targetCategoryId) {
+      setInfoMessage("Create a category first.");
+      return;
+    } 
+
+    try {
+      setLoading(true);
+      await updatePackage(pkgId, updates);
+      setNewCategory("");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to add package." );
     }
   }
 
-  async function editPackage(pkg: BookingPackage, nextName: string) {
-    const trimmed = nextName.trim();
-    if (!trimmed) return;
-    await fetch(`/api/admin/booking/packages/${pkg.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...pkg,
-        name: trimmed,
-      }),
-    });
-    await loadPackagesData();
+  async function deletePackage(packageId: string) {
+    try { 
+      setLoading(true);
+      await removePackage(packageId)
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setInfoMessage( "Failed to delete category." );
+    }
   }
 
-  async function deletePackage(packageId: number) {
-    await fetch(`/api/admin/booking/packages/${packageId}`, { method: "DELETE" });
-    await loadPackagesData();
-  }
-
-  async function updateBookingStatus(id: number, status: "pending" | "confirmed" | "rejected" | "done") {
-    await fetch(`/api/admin/bookings/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    await loadBookingsData();
-    await loadDashboard(false);
+  async function updateBookingStatus(id: string, status: "confirmed" | "rejected" | "done" ) {
+     try {
+      console.log({status})
+      await updateBooking(id, status);
+    } catch (error) {
+      console.log(error);
+      setInfoMessage( "Failed to update booking status." );
+    }
   }
 
   async function logout() {
-    await fetch("/api/admin/logout", { method: "POST" });
+    await signOut(auth);
     router.replace("/admin/login");
   }
 
   if (authChecking) {
     return <main className="min-h-screen bg-[#f4f4f4] p-8 text-black">Loading...</main>;
   }
+  console.log({categories})
 
   return (
     <main className={`${poppins.className} min-h-screen bg-[#f4f4f4] text-black`}>
@@ -253,18 +431,20 @@ export default function AdminPage() {
       <section className="w-full px-8 pt-9 pb-12">
         <AdminTabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
-        <div className="mt-3 mx-auto w-[1600px] h-px bg-black/8" />
+        <div className="mt-3 mx-auto w-full h-px bg-black/8" />
         {activeTab === "Dashboard" ? <AdminDashboardPanel loadingMetrics={loadingMetrics} metrics={metrics} /> : null}
 
         {activeTab === "Packages" ? (
           <AdminPackagesPanel
-            groupedCategories={groupedCategories}
+            categories={categories}
             packages={packages}
             loadingPackages={loadingPackages}
             expandedPackageId={expandedPackageId}
             infoMessage={infoMessage}
             newCategory={newCategory}
             onNewCategoryChange={setNewCategory}
+            order={order}
+            onOrderChange={setOrder}
             onAddCategory={addCategory}
             onEditCategory={editCategory}
             onDeleteCategory={deleteCategory}
@@ -272,6 +452,7 @@ export default function AdminPage() {
             onEditPackage={editPackage}
             onDeletePackage={deletePackage}
             onTogglePackage={setExpandedPackageId}
+            loading={loading}
           />
         ) : null}
 
@@ -284,10 +465,29 @@ export default function AdminPage() {
         ) : null}
 
         {activeTab === "Works" ? (
-          <AdminWorksPanel />
+          <AdminWorksPanel 
+            works={works}
+            loading={loading}
+          />
         ) : null}
 
-      </section>
+        {activeTab === "History" ? (
+          <AdminHistoryPanel 
+            completed={history} 
+            loading={loadingBookings}
+            refresh={loadBookingsData}
+          />
+        ) : null}
+
+        {activeTab === "Gallery" ? (
+          <AdminGalleryPanel 
+            gallery={gallery} 
+            categories={categories}
+            loading={loading}
+          />
+        ) : null}
+
+      </section> 
     </main>
   );
 }

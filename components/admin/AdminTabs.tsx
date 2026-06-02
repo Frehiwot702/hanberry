@@ -10,7 +10,7 @@ interface AdminTabsProps {
 
 export function AdminTabs({ tabs, activeTab, onChange }: AdminTabsProps) {
   return (
-    <nav className="flex items-center justify-start gap-18 text-black/80 max-w-[1600px] mx-auto">
+    <nav className="flex flex-wrap items-center justify-center md:justify-start gap-5 lg:gap-10 text-black/80 mx-auto">
       {tabs.map((tab) => (
         <button
           key={tab}
