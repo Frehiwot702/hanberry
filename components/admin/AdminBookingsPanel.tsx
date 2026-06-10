@@ -84,8 +84,8 @@ export function AdminBookingsPanel({ requests, loading, onUpdateStatus }: AdminB
       />
 
       {showCompletedModal ? (
-        <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center px-6">
-          <div className="w-full max-w-[760px] rounded-2xl bg-white p-8 shadow-xl relative text-center">
+        <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center p-4">
+          <div className="w-full max-w-[880px] max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-4 md:p-8 shadow-xl">
             <button
               type="button"
               onClick={() => setShowCompletedModal(false)}

@@ -167,8 +167,8 @@ const AdminGalleryPanel = ({gallery, categories, loading} : {gallery: Gallery[];
         Save Work
         </button> */}
         {showAddGallery ? (
-            <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center px-6">
-            <div className="w-full max-w-[880px] rounded-2xl bg-white p-8 shadow-xl">
+            <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center p-4">
+            <div className="w-full max-w-[880px] max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-4 md:p-8 shadow-xl">
                 <h3 className="text-[36px] font-medium">Add new image</h3>
                 {error && <p className='text-center text-red-500'>{error}</p>}
 
