@@ -11,7 +11,7 @@ interface AdminDashboardPanelProps {
 export function AdminDashboardPanel({ loadingMetrics, metrics }: AdminDashboardPanelProps) {
   return (
     <>
-      <div className="mt-12 relative h-[150px] w-[1600px] overflow-hidden rounded-[34px] mx-auto pb-10">
+      <div className="mt-12 relative h-[150px] w-full overflow-hidden rounded-[34px] mx-auto pb-10">
         <Image
           src="/images/Rectangle 103.png"
           alt="Welcome banner gradient"
@@ -27,7 +27,7 @@ export function AdminDashboardPanel({ loadingMetrics, metrics }: AdminDashboardP
 
       <StatCard
         className="mt-6"
-        title="Bookings"
+        title="Pending Bookings"
         description="Stay updated with your client appointments and manage upcoming requests with ease."
         value={loadingMetrics ? "..." : String(metrics.bookings)}
       />
@@ -54,13 +54,13 @@ function StatCard({
 }) {
   return (
     <article
-      className={`w-[1600px] rounded-[34px] h-[150px] border border-black/35 bg-[#f4f4f4] px-10 py-7 flex items-center justify-between mx-auto ${className ?? ""}`}
+      className={`w-full rounded-[34px] h-[150px] border border-black/35 bg-[#f4f4f4] px-10 py-7 flex items-center justify-between mx-auto ${className ?? ""}`}
     >
       <div>
-        <h2 className="text-[38px] leading-none font-extrabold">{title}</h2>
-        <p className="mt-4 text-[16px] text-black/60 leading-tight max-w-[560px] font-light">{description}</p>
+        <h2 className="text-[28px] md:text-[38px] leading-none font-extrabold">{title}</h2>
+        <p className="mt-4 text-[12px] md:text-[16px] text-black/60 leading-tight max-w-[560px] font-light">{description}</p>
       </div>
-      <span className="text-[72px] font-bold leading-none">{value}</span>
+      <span className="text-[62px] md:text-[72px] font-bold leading-none">{value}</span>
     </article>
   );
 }

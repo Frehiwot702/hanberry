@@ -1,33 +1,40 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { BookingCategory, BookingCategoryGroup, BookingPackage, NewPackageInput } from "./types";
+import { useState } from "react"; 
+import { AddPackageRequest, Package } from "@/app/services/package.service";
+import { Category } from "@/app/services/category.service";
+// import { BookingCategory, BookingCategoryGroup, BookingPackage, NewPackageInput } from "./types";
 
 interface AdminPackagesPanelProps {
-  groupedCategories: BookingCategoryGroup[];
-  packages: BookingPackage[];
+  categories: Category[];
+  packages: Package[];
   loadingPackages: boolean;
-  expandedPackageId: number | null;
+  expandedPackageId: string | null;
   infoMessage: string;
   newCategory: string;
+  order: string;
   onNewCategoryChange: (value: string) => void;
-  onAddCategory: (nameOverride?: string) => Promise<void> | void;
-  onEditCategory: (category: BookingCategory, nextName: string) => Promise<void> | void;
-  onDeleteCategory: (id: number) => Promise<void> | void;
-  onAddPackage: (input?: NewPackageInput) => Promise<void> | void;
-  onEditPackage: (pkg: BookingPackage, nextName: string) => Promise<void> | void;
-  onDeletePackage: (id: number) => Promise<void> | void;
-  onTogglePackage: (id: number | null) => void;
+  onOrderChange: (value: string) => void;
+  onAddCategory: (nameOverride: string, order: string) => Promise<void> | void;
+  onEditCategory: (categoryId: string, updates: { name: string; status?: "active" | "inactive", order: number}) => Promise<void> | void;
+  onDeleteCategory: (id: string) => Promise<void> | void;
+  onAddPackage: (pkg: AddPackageRequest) => Promise<void> | void;
+  onEditPackage: (pkgId: string, updates: AddPackageRequest) => Promise<void> | void;
+  onDeletePackage: (id: string) => Promise<void> | void;
+  onTogglePackage: (id: string | null) => void;
+  loading: boolean;
 }
 
 export function AdminPackagesPanel({
-  groupedCategories,
+  categories,
   packages,
   loadingPackages,
   expandedPackageId,
   infoMessage,
   newCategory,
   onNewCategoryChange,
+  order,
+  onOrderChange,
   onAddCategory,
   onEditCategory,
   onDeleteCategory,
@@ -35,34 +42,41 @@ export function AdminPackagesPanel({
   onEditPackage,
   onDeletePackage,
   onTogglePackage,
+  loading
 }: AdminPackagesPanelProps) {
   const [showAddPackageModal, setShowAddPackageModal] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | "">(
-    groupedCategories[0]?.id ?? "",
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | "">(
+    categories[0]?.id ?? "",
   );
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(categories[0]);
   const [packageName, setPackageName] = useState("");
   const [packageDescription, setPackageDescription] = useState("");
   const [packageDuration, setPackageDuration] = useState("");
   const [packagePrice, setPackagePrice] = useState("");
+  const [packageStatus, setPackageStatus] = useState<"active" | "inactive">("active");
   const [includeDraft, setIncludeDraft] = useState("");
   const [includes, setIncludes] = useState<string[]>([]);
+  const [packageOptionalNotes, setPackageOptionalNotes] = useState(""); 
   const [modalType, setModalType] = useState<
     null | "edit-category" | "delete-category" | "edit-package" | "delete-package"
   >(null);
-  const [activeCategory, setActiveCategory] = useState<BookingCategory | null>(null);
-  const [activePackage, setActivePackage] = useState<BookingPackage | null>(null);
-  const [editNameDraft, setEditNameDraft] = useState("");
 
-  const categories = useMemo(
-    () =>
-      groupedCategories.map(({ id, name, sort_order, active }) => ({
-        id,
-        name,
-        sort_order,
-        active,
-      })),
-    [groupedCategories],
-  );
+  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [activePackage, setActivePackage] = useState<Package | null>(null);
+
+  const [editNameDraft, setEditNameDraft] = useState("");
+  const [editStatus, setEditStatus] = useState<"active" | "inactive">();
+  const [editOrder, setEditOrder] = useState(0);
+
+  // const categories = useMemo(
+  //   () =>
+  //     groupedCategories.map(({ id, name, status }) => ({
+  //       id,
+  //       name, 
+  //       status,
+  //     })),
+  //   [groupedCategories],
+  // );
 
   function openAddPackageModal() {
     setSelectedCategoryId(categories[0]?.id ?? "");
@@ -86,24 +100,34 @@ export function AdminPackagesPanel({
     setIncludes((prev) => prev.filter((_, i) => i !== index));
   }
 
-  function openEditCategoryModal(category: BookingCategory) {
+  function openEditCategoryModal(category: Category) {
     setActiveCategory(category);
     setEditNameDraft(category.name);
+    setEditStatus(category.status);
+    setEditOrder(category.order);
+    console.log({category})
     setModalType("edit-category");
   }
 
-  function openDeleteCategoryModal(category: BookingCategory) {
+  function openDeleteCategoryModal(category: Category) {
     setActiveCategory(category);
     setModalType("delete-category");
   }
 
-  function openEditPackageModal(pkg: BookingPackage) {
+  function openEditPackageModal(pkg: Package) {
     setActivePackage(pkg);
-    setEditNameDraft(pkg.name);
-    setModalType("edit-package");
+    setPackageName(pkg.name);
+    setPackageDescription(pkg.description);
+    setPackageDuration(pkg.duration);
+    setPackagePrice(pkg.price.toLocaleString());
+    if(pkg.optional_notes) setPackageOptionalNotes(pkg.optional_notes);
+    setIncludes(pkg.includes);
+    setSelectedCategoryId(pkg.categoryId);
+    setPackageStatus(pkg.status);
+    setModalType("edit-package"); 
   }
 
-  function openDeletePackageModal(pkg: BookingPackage) {
+  function openDeletePackageModal(pkg: Package) {
     setActivePackage(pkg);
     setModalType("delete-package");
   }
@@ -119,20 +143,27 @@ export function AdminPackagesPanel({
     if (!selectedCategoryId) return;
 
     await onAddPackage({
-      category_id: Number(selectedCategoryId),
-      name: packageName,
-      type: "normal",
+      categoryId: selectedCategoryId,
+      category: {
+        name: selectedCategory?.name ?? "",
+        status: selectedCategory?.status ?? "active"
+      },
+      status: packageStatus,
+      name: packageName, 
       description: packageDescription,
       duration: packageDuration,
-      price: Number(packagePrice || 0),
+      price: Number(packagePrice),
       includes,
+      optional_notes: packageOptionalNotes
     });
     setShowAddPackageModal(false);
   }
+  console.log({activeCategory})
 
   async function submitActionModal() {
     if (modalType === "edit-category" && activeCategory) {
-      await onEditCategory(activeCategory, editNameDraft);
+      const updates = {name: editNameDraft, status: editStatus, order: editOrder}
+      await onEditCategory(activeCategory.id, updates);
       closeActionModal();
       return;
     }
@@ -142,7 +173,21 @@ export function AdminPackagesPanel({
       return;
     }
     if (modalType === "edit-package" && activePackage) {
-      await onEditPackage(activePackage, editNameDraft);
+      const updates = {
+        name: packageName,
+        description: packageDescription,
+        price: Number(packagePrice),
+        duration: packageDuration,
+        includes,
+        optional_notes: packageOptionalNotes,
+        categoryId: selectedCategoryId,
+        category: {
+          name: selectedCategory?.name ?? "",
+          status: selectedCategory ? selectedCategory.status : "active"
+        },
+        status: packageStatus
+      }
+      await onEditPackage(activePackage.id, updates);
       closeActionModal();
       return;
     }
@@ -154,7 +199,7 @@ export function AdminPackagesPanel({
   }
 
   return (
-    <section className="mt-12 mx-28">
+    <section className="mt-12 lg:mx-28">
       <h1 className="text-[30px] font-medium">Package Management</h1>
       <p className=''>Create and update your beauty packages to reflect your latest services.</p>
 
@@ -173,7 +218,7 @@ export function AdminPackagesPanel({
           </div>
 
           <ul className="mt-6 space-y-6">
-            {groupedCategories.map((category) => (
+            {categories.sort((a, b) => a.order - b.order).map((category) => (
               <li key={category.id} className="flex items-center justify-between text-[20px] leading-none">
                 <span className="flex items-center gap-4">
                   <span className="text-xs">•</span>
@@ -195,17 +240,26 @@ export function AdminPackagesPanel({
             ))}
           </ul>
 
-          <div className="mt-12 border border-black/40 rounded-xl p-4">
-            <h3 className="text-[28px] font-medium">Add new category</h3>
+          <div className="mt-12 border border-black/40 rounded-xl p-4 space-y-4">
+            <h3 className="text-[28px] font-medium">Add new category</h3> 
             <input
               value={newCategory}
+              required
               onChange={(e) => onNewCategoryChange(e.target.value)}
               placeholder="Enter category name here"
-              className="mt-4 w-full border border-black/50 h-[40px] px-3 text-xs"
-            />
+              className="mt-2 w-full border border-black/50 h-10 px-3 text-xs"
+            /> 
+            <input
+              type='number'
+              value={order}
+              required
+              onChange={(e) => onOrderChange(e.target.value)}
+              placeholder="Enter category order here"
+              className="mt-2 w-full border border-black/50 h-10 px-3 text-xs"
+            /> 
             <button
               type="button"
-              onClick={() => onAddCategory()}
+              onClick={() => onAddCategory(newCategory, order)}
               className="mt-4 w-full h-[42px] bg-black text-white text-[18px] font-medium"
             >
               Add category
@@ -292,13 +346,13 @@ export function AdminPackagesPanel({
             <select
               className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
               value={selectedCategoryId}
-              onChange={(e) => setSelectedCategoryId(Number(e.target.value))}
+              onChange={(e) => setSelectedCategoryId(e.target.value)}
             >
               <option value="" disabled>
                 Select category
               </option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option key={category.id} value={category.id} onClick={() => setSelectedCategory(category)}>
                   {category.name}
                 </option>
               ))}
@@ -325,11 +379,32 @@ export function AdminPackagesPanel({
                 className="h-[50px] border border-black/40 px-3 text-sm"
               />
               <input
+                type="number"
                 value={packagePrice}
                 onChange={(e) => setPackagePrice(e.target.value)}
                 placeholder="Enter package price here"
                 className="h-[50px] border border-black/40 px-3 text-sm"
               />
+            </div>
+
+            <div className="mt-5 grid ">
+              <input
+                value={packageOptionalNotes}
+                onChange={(e) => setPackageOptionalNotes(e.target.value)}
+                placeholder="Enter package optional note here"
+                className="h-[50px] border border-black/40 px-3 text-sm"
+              /> 
+              <select
+                className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
+                value={packageStatus}
+                onChange={(e) => setPackageStatus(e.target.value as "active" | "inactive")}
+              >
+                <option value="" disabled>
+                  Select status
+                </option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
             </div>
 
             <p className="mt-5 text-sm text-black/80">Package includes</p>
@@ -358,6 +433,8 @@ export function AdminPackagesPanel({
               ))}
             </ul>
 
+            
+
             <div className="mt-6 flex items-center justify-center gap-4">
               <button
                 type="button"
@@ -367,7 +444,7 @@ export function AdminPackagesPanel({
                 Cancel
               </button>
               <button type="button" onClick={submitNewPackage} className="h-[50px] px-8 bg-black text-white text-[20px]">
-                Add Package
+                {loading ? "adding..." : "Add Package"}
               </button>
             </div>
           </div>
@@ -384,12 +461,122 @@ export function AdminPackagesPanel({
               {modalType === "delete-package" && "Delete package"}
             </h3>
 
-            {modalType === "edit-category" || modalType === "edit-package" ? (
-              <input
-                value={editNameDraft}
-                onChange={(e) => setEditNameDraft(e.target.value)}
-                className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
-              />
+            {modalType === "edit-category" ? (
+              <div>
+                <input
+                  value={editNameDraft}
+                  onChange={(e) => setEditNameDraft(e.target.value)}
+                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+                />
+                <select
+                  value={editStatus}
+                  onChange={(e) =>
+                    setEditStatus(
+                      e.target.value as "active" | "inactive"
+                    )
+                  }
+                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+                <input
+                  value={editOrder}
+                  onChange={(e) => setEditOrder(Number(e.target.value))}
+                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+                />
+              </div>
+            ) : modalType === "edit-package" ? (
+              <div>
+                <select
+                  className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
+                  value={selectedCategoryId}
+                  onChange={(e) => setSelectedCategoryId(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+
+                <input
+                  value={packageName}
+                  onChange={(e) => setPackageName(e.target.value)}
+                  placeholder="Enter package name here"
+                  className="mt-6 w-full h-[50px] border border-black/40 px-3 text-sm"
+                />
+                <input
+                  value={packageDescription}
+                  onChange={(e) => setPackageDescription(e.target.value)}
+                  placeholder="Enter package description here"
+                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+                />
+
+                <div className="mt-5 grid grid-cols-2 gap-5">
+                  <input
+                    value={packageDuration}
+                    onChange={(e) => setPackageDuration(e.target.value)}
+                    placeholder="Enter package duration here"
+                    className="h-[50px] border border-black/40 px-3 text-sm"
+                  />
+                  <input
+                    value={packagePrice}
+                    onChange={(e) => setPackagePrice(e.target.value)}
+                    placeholder="Enter package price here"
+                    className="h-[50px] border border-black/40 px-3 text-sm"
+                  />
+                </div>
+
+                <div className="mt-5 grid ">
+                  <input
+                    value={packageOptionalNotes}
+                    onChange={(e) => setPackageOptionalNotes(e.target.value)}
+                    placeholder="Enter package optional note here"
+                    className="h-[50px] border border-black/40 px-3 text-sm"
+                  /> 
+                  <select
+                    className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
+                    value={packageStatus}
+                    onChange={(e) => setPackageStatus(e.target.value as "active" | "inactive")}
+                  >
+                    <option value="" disabled>
+                      Select status
+                    </option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+
+                <p className="mt-5 text-sm text-black/80">Package includes</p>
+                <div className="mt-2 flex items-center gap-4">
+                  <input
+                    value={includeDraft}
+                    onChange={(e) => setIncludeDraft(e.target.value)}
+                    className="w-[320px] h-[46px] border border-black/40 px-3 text-sm"
+                  />
+                  <button type="button" onClick={addInclude} className="h-[46px] px-8 bg-black text-white text-[18px]">
+                    Add
+                  </button>
+                </div>
+                <ul className="mt-4 space-y-1 text-sm text-[#bba4a4]">
+                  {includes.map((include, index) => (
+                    <li key={`${include}-${index}`} className="flex items-center gap-2">
+                      <span>• {include}</span>
+                      <button
+                        type="button"
+                        className="text-black/60 hover:text-black"
+                        onClick={() => removeInclude(index)}
+                      >
+                        x
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ) : (
               <p className="mt-5 text-sm text-black/70">
                 Are you sure you want to delete{" "}
@@ -412,7 +599,7 @@ export function AdminPackagesPanel({
                   modalType?.includes("delete") ? "bg-[#ea3a3a]" : "bg-black"
                 }`}
               >
-                {modalType?.includes("delete") ? "Delete" : "Save"}
+                {loading ? "loading..." : modalType?.includes("delete") ? "Delete" : "Save"}
               </button>
             </div>
           </div>
