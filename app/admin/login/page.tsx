@@ -65,11 +65,11 @@ export default function AdminLoginPage() {
 
   return (
     <main
-      className={`${inter.className} min-h-screen bg-white text-neutral-900 flex items-center justify-center px-5 py-10 sm:px-8 md:px-12`}
+      className={`${inter.className} min-h-screen bg-white text-neutral-900 flex items-center justify-center py-10 sm:px-8 md:px-12`}
     >
       <div className="w-full grid md:grid-cols-2 lg:flex-row items-center justify-center gap-14 lg:gap-18 xl:gap-24">
         {/* Left: informational card */}
-        <div className="w-full shrink-0 flex justify-center lg:justify-end lg:flex-1 min-w-0 p-10">
+        <div className="w-full shrink-0 flex justify-center lg:justify-end lg:flex-1 min-w-0 px-4 md:p-10">
           <div className="w-full rounded-xl border border-black bg-white p-6 sm:p-7">
             <div
               className="overflow-hidden rounded-[10px] w-full"
@@ -106,7 +106,7 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Right: login form */}
-        <div className="w-full lg:flex-1 flex flex-col justify-center min-w-0 ">
+        <div className="w-full lg:flex-1 flex flex-col justify-center min-w-0 px-5">
           <div className={`${poltawskiNowy.className} text-black`}>
             <h1 className="text-[1.75rem] sm:text-[1.95rem] lg:text-[2.125rem] xl:text-5xl leading-[1.2] font-medium tracking-[0.04em] text-balance">
               Enter your credentials to continue
