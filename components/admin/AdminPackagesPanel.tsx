@@ -340,82 +340,104 @@ export function AdminPackagesPanel({
 
       {showAddPackageModal ? (
         <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center p-4">
-          <div className="w-full max-w-[880px] max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-4 md:p-8 shadow-xl">
+          <div className="w-full max-w-[880px] max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-4 md:p-8 shadow-xl text-smspace-y-5">
 
-            <h3 className="text-[36px] font-medium">Add new package</h3>
+            <h3 className="text-2xl md:text-[36px] font-medium">Add new package</h3>
 
-            <select
-              className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
-              value={selectedCategoryId}
-              onChange={(e) => setSelectedCategoryId(e.target.value)}
-            >
-              <option value="" disabled>
-                Select category
-              </option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id} onClick={() => setSelectedCategory(category)}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <input
-              value={packageName}
-              onChange={(e) => setPackageName(e.target.value)}
-              placeholder="Enter package name here"
-              className="mt-6 w-full h-[50px] border border-black/40 px-3 text-sm"
-            />
-            <input
-              value={packageDescription}
-              onChange={(e) => setPackageDescription(e.target.value)}
-              placeholder="Enter package description here"
-              className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
-            />
-
-            <div className="mt-5 grid grid-cols-2 gap-5">
-              <input
-                value={packageDuration}
-                onChange={(e) => setPackageDuration(e.target.value)}
-                placeholder="Enter package duration here"
-                className="h-[50px] border border-black/40 px-3 text-sm"
-              />
-              <input
-                type="number"
-                value={packagePrice}
-                onChange={(e) => setPackagePrice(e.target.value)}
-                placeholder="Enter package price here"
-                className="h-[50px] border border-black/40 px-3 text-sm"
-              />
-            </div>
-
-            <div className="mt-5 grid ">
-              <input
-                value={packageOptionalNotes}
-                onChange={(e) => setPackageOptionalNotes(e.target.value)}
-                placeholder="Enter package optional note here"
-                className="h-[50px] border border-black/40 px-3 text-sm"
-              /> 
+            <div className='flex flex-col mt-5 space-y-2 gap-2'>
+              <h3>Select Category</h3>
               <select
-                className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
-                value={packageStatus}
-                onChange={(e) => setPackageStatus(e.target.value as "active" | "inactive")}
+                className="w-full h-[50px] border border-black/40 px-3 text-sm"
+                value={selectedCategoryId}
+                onChange={(e) => setSelectedCategoryId(e.target.value)}
               >
                 <option value="" disabled>
-                  Select status
+                  Select category
                 </option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id} onClick={() => setSelectedCategory(category)}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
 
-            <p className="mt-5 text-sm text-black/80">Package includes</p>
+          <div className='flex flex-col mt-5 gap-2'>
+              <h3>Package name</h3>
+              <input
+                value={packageName}
+                onChange={(e) => setPackageName(e.target.value)}
+                placeholder="Enter package name here"
+                className="w-full h-[50px] border border-black/40 px-3 text-sm"
+              />
+          </div>
+          <div className='flex flex-col mt-5 gap-2'>
+              <h3>Package description</h3>
+              <input
+                value={packageDescription}
+                onChange={(e) => setPackageDescription(e.target.value)}
+                placeholder="Enter package description here"
+                className="w-full h-[50px] border border-black/40 px-3 text-sm"
+              />
+          </div>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              <div className='flex flex-col mt-5 space-y-2 gap-2'>
+                <h3>Package duration</h3>
+                <input
+                  value={packageDuration}
+                  onChange={(e) => setPackageDuration(e.target.value)}
+                  placeholder="Enter package duration here"
+                  className="h-[50px] border border-black/40 px-3 text-sm"
+                />
+              </div>
+              <div className='flex flex-col space-y-2 gap-2'>
+                <h3>Package price</h3>
+                <input
+                  type="number"
+                  value={packagePrice}
+                  onChange={(e) => setPackagePrice(e.target.value)}
+                  placeholder="Enter package price here"
+                  className="h-[50px] border border-black/40 px-3 text-sm"
+                />
+              </div>
+            </div>
+
+            <div className="mt-5 grid ">
+              <div className='flex flex-col space-y-2 gap-2'>
+                <h3>Additional package inforation</h3>
+                <input
+                  value={packageOptionalNotes}
+                  onChange={(e) => setPackageOptionalNotes(e.target.value)}
+                  placeholder="Enter package optional note here"
+                  className="h-[50px] border border-black/40 px-3 text-sm"
+                /> 
+              </div>
+              
+              <div className='flex flex-col mt-5 space-y-2 gap-2'>
+                <h3>Package status</h3>
+                <select
+                  className="w-full h-[50px] border border-black/40 px-3 text-sm"
+                  value={packageStatus}
+                  onChange={(e) => setPackageStatus(e.target.value as "active" | "inactive")}
+                >
+                  <option value="" disabled>
+                    Select status
+                  </option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <h3 className="mt-5 text-sm text-black/80">Package includes</h3>
             <div className="mt-2 flex items-center gap-4">
               <input
                 value={includeDraft}
                 onChange={(e) => setIncludeDraft(e.target.value)}
                 className="w-[320px] h-[46px] border border-black/40 px-3 text-sm"
               />
-              <button type="button" onClick={addInclude} className="h-[46px] px-8 bg-black text-white text-[18px]">
+              <button type="button" onClick={addInclude} className="h-[46px] px-8 bg-black text-white text-md md:text-[18px]">
                 Add
               </button>
             </div>
@@ -436,16 +458,17 @@ export function AdminPackagesPanel({
 
             
 
-            <div className="mt-6 flex items-center justify-center gap-4">
+            <div className="mt-6 flex flex-col  md:flex-row  md:row-reverse items-center justify-center gap-4">
+              
+              <button type="button" onClick={submitNewPackage} className="h-[50px] px-8 bg-black text-white text-md md:text-[20px]">
+                {loading ? "adding..." : "Add Package"}
+              </button>
               <button
                 type="button"
                 onClick={() => setShowAddPackageModal(false)}
-                className="h-[50px] px-8 border border-black/30 text-[20px]"
+                className="w-full h-[50px] px-8 border border-black/30 text-md md:text-[20px]"
               >
                 Cancel
-              </button>
-              <button type="button" onClick={submitNewPackage} className="h-[50px] px-8 bg-black text-white text-[20px]">
-                {loading ? "adding..." : "Add Package"}
               </button>
             </div>
           </div>
@@ -453,156 +476,145 @@ export function AdminPackagesPanel({
       ) : null}
 
       {modalType ? (
-        <div className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center px-6">
-          <div className="w-full max-w-[560px] rounded-2xl bg-white p-8 shadow-xl">
-            <h3 className="text-[30px] font-medium">
-              {modalType === "edit-category" && "Edit category"}
-              {modalType === "delete-category" && "Delete category"}
-              {modalType === "edit-package" && "Edit package"}
-              {modalType === "delete-package" && "Delete package"}
+        <div className="fixed inset-0 z-50 bg-black/20 flex justify-center items-start overflow-y-auto p-2 md:p-4">
+          <div className="w-full max-w-[880px] my-4 md:my-8 rounded-2xl bg-white p-4 md:p-8 shadow-xl text-sm">
+
+            <h3 className="text-xl md:text-[36px] font-medium">
+              Add new package
             </h3>
 
-            {modalType === "edit-category" ? (
-              <div>
-                <input
-                  value={editNameDraft}
-                  onChange={(e) => setEditNameDraft(e.target.value)}
-                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
-                />
-                <select
-                  value={editStatus}
-                  onChange={(e) =>
-                    setEditStatus(
-                      e.target.value as "active" | "inactive"
-                    )
-                  }
-                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+            <select
+              className="mt-6 w-full md:w-[360px] h-[50px] border border-black/40 px-3 text-sm"
+              value={selectedCategoryId}
+              onChange={(e) => setSelectedCategoryId(e.target.value)}
+            >
+              <option value="" disabled>
+                Select category
+              </option>
+              {categories.map((category) => (
+                <option
+                  key={category.id}
+                  value={category.id}
+                  onClick={() => setSelectedCategory(category)}
                 >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-                <input
-                  value={editOrder}
-                  onChange={(e) => setEditOrder(Number(e.target.value))}
-                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
-                />
-              </div>
-            ) : modalType === "edit-package" ? (
-              <div>
-                <select
-                  className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
-                  value={selectedCategoryId}
-                  onChange={(e) => setSelectedCategoryId(e.target.value)}
-                >
-                  <option value="" disabled>
-                    Select category
-                  </option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
+                  {category.name}
+                </option>
+              ))}
+            </select>
 
-                <input
-                  value={packageName}
-                  onChange={(e) => setPackageName(e.target.value)}
-                  placeholder="Enter package name here"
-                  className="mt-6 w-full h-[50px] border border-black/40 px-3 text-sm"
-                />
-                <input
-                  value={packageDescription}
-                  onChange={(e) => setPackageDescription(e.target.value)}
-                  placeholder="Enter package description here"
-                  className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
-                />
+            <input
+              value={packageName}
+              onChange={(e) => setPackageName(e.target.value)}
+              placeholder="Enter package name here"
+              className="mt-6 w-full h-[50px] border border-black/40 px-3 text-sm"
+            />
 
-                <div className="mt-5 grid grid-cols-2 gap-5">
-                  <input
-                    value={packageDuration}
-                    onChange={(e) => setPackageDuration(e.target.value)}
-                    placeholder="Enter package duration here"
-                    className="h-[50px] border border-black/40 px-3 text-sm"
-                  />
-                  <input
-                    value={packagePrice}
-                    onChange={(e) => setPackagePrice(e.target.value)}
-                    placeholder="Enter package price here"
-                    className="h-[50px] border border-black/40 px-3 text-sm"
-                  />
-                </div>
+            <input
+              value={packageDescription}
+              onChange={(e) => setPackageDescription(e.target.value)}
+              placeholder="Enter package description here"
+              className="mt-5 w-full h-[50px] border border-black/40 px-3 text-sm"
+            />
 
-                <div className="mt-5 grid ">
-                  <input
-                    value={packageOptionalNotes}
-                    onChange={(e) => setPackageOptionalNotes(e.target.value)}
-                    placeholder="Enter package optional note here"
-                    className="h-[50px] border border-black/40 px-3 text-sm"
-                  /> 
-                  <select
-                    className="mt-6 w-[360px] h-[50px] border border-black/40 px-3 text-sm"
-                    value={packageStatus}
-                    onChange={(e) => setPackageStatus(e.target.value as "active" | "inactive")}
-                  >
-                    <option value="" disabled>
-                      Select status
-                    </option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <input
+                value={packageDuration}
+                onChange={(e) => setPackageDuration(e.target.value)}
+                placeholder="Enter package duration here"
+                className="h-[50px] border border-black/40 px-3 text-sm"
+              />
 
-                <p className="mt-5 text-sm text-black/80">Package includes</p>
-                <div className="mt-2 flex items-center gap-4">
-                  <input
-                    value={includeDraft}
-                    onChange={(e) => setIncludeDraft(e.target.value)}
-                    className="w-[320px] h-[46px] border border-black/40 px-3 text-sm"
-                  />
-                  <button type="button" onClick={addInclude} className="h-[46px] px-8 bg-black text-white text-[18px]">
-                    Add
-                  </button>
-                </div>
-                <ul className="mt-4 space-y-1 text-sm text-[#bba4a4]">
-                  {includes.map((include, index) => (
-                    <li key={`${include}-${index}`} className="flex items-center gap-2">
-                      <span>• {include}</span>
-                      <button
-                        type="button"
-                        className="text-black/60 hover:text-black"
-                        onClick={() => removeInclude(index)}
-                      >
-                        x
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <p className="mt-5 text-sm text-black/70">
-                Are you sure you want to delete{" "}
-                {modalType === "delete-category" ? activeCategory?.name : activePackage?.name}?
-              </p>
-            )}
+              <input
+                type="number"
+                value={packagePrice}
+                onChange={(e) => setPackagePrice(e.target.value)}
+                placeholder="Enter package price here"
+                className="h-[50px] border border-black/40 px-3 text-sm"
+              />
+            </div>
 
-            <div className="mt-6 flex items-center justify-end gap-4">
+            <div className="mt-5 grid gap-5">
+              <input
+                value={packageOptionalNotes}
+                onChange={(e) => setPackageOptionalNotes(e.target.value)}
+                placeholder="Enter package optional note here"
+                className="h-[50px] border border-black/40 px-3 text-sm"
+              />
+
+              <select
+                className="w-full md:w-[360px] h-[50px] border border-black/40 px-3 text-sm"
+                value={packageStatus}
+                onChange={(e) =>
+                  setPackageStatus(e.target.value as "active" | "inactive")
+                }
+              >
+                <option value="" disabled>
+                  Select status
+                </option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+
+            <p className="mt-5 text-sm text-black/80">
+              Package includes
+            </p>
+
+            <div className="mt-2 flex flex-col md:flex-row items-stretch md:items-center gap-4">
+              <input
+                value={includeDraft}
+                onChange={(e) => setIncludeDraft(e.target.value)}
+                className="w-full md:w-[320px] h-[46px] border border-black/40 px-3 text-sm"
+              />
+
               <button
                 type="button"
-                onClick={closeActionModal}
-                className="h-[46px] px-6 border border-black/30 text-[16px]"
+                onClick={addInclude}
+                className="h-[46px] w-full md:w-auto px-8 bg-black text-white text-md md:text-[18px]"
+              >
+                Add
+              </button>
+            </div>
+
+            <ul className="mt-4 space-y-1 text-sm text-[#bba4a4]">
+              {includes.map((include, index) => (
+                <li
+                  key={`${include}-${index}`}
+                  className="flex items-center gap-2"
+                >
+                  <span>• {include}</span>
+
+                  <button
+                    type="button"
+                    className="text-black/60 hover:text-black"
+                    onClick={() => removeInclude(index)}
+                  >
+                    x
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 flex flex-col md:flex-row md:row-reverse items-stretch md:items-center justify-center gap-4">
+
+              <button
+                type="button"
+                onClick={submitNewPackage}
+                className="h-[50px] w-full md:w-auto px-8 bg-black text-white text-md md:text-[20px]"
+              >
+                {loading ? "adding..." : "Add Package"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowAddPackageModal(false)}
+                className="h-[50px] w-full md:w-auto px-8 border border-black/30 text-md md:text-[20px]"
               >
                 Cancel
               </button>
-              <button
-                type="button"
-                onClick={submitActionModal}
-                className={`h-[46px] px-6 text-[16px] text-white ${
-                  modalType?.includes("delete") ? "bg-[#ea3a3a]" : "bg-black"
-                }`}
-              >
-                {loading ? "loading..." : modalType?.includes("delete") ? "Delete" : "Save"}
-              </button>
+
             </div>
+
           </div>
         </div>
       ) : null}

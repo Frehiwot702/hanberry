@@ -109,7 +109,7 @@ const Masonry: React.FC<MasonryProps> = ({
   const columns = useMedia(
     ['(min-width:1500px)', '(min-width:1000px)', '(min-width:600px)'],
     [4, 3, 2],
-    3
+    2
   );
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
@@ -120,7 +120,7 @@ const Masonry: React.FC<MasonryProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [newImage, setNewImage] = useState<File | null>(null);
-  const [cloudinaryUpload, setCloudinaryUpload] = useState(false);
+  // const [cloudinaryUpload, setCloudinaryUpload] = useState(false);
 
   const getInitialPosition = (item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
