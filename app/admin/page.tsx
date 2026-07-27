@@ -428,7 +428,7 @@ export default function AdminPage() {
     <main className={`${poppins.className} min-h-screen bg-[#f4f4f4] text-black`}>
       <AdminHeader onLogout={logout} />
 
-      <section className="w-full px-8 pt-9 pb-12">
+      <section className="w-full px-2 md:px-8 pt-9 pb-12">
         <AdminTabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
         <div className="mt-3 mx-auto w-full h-px bg-black/8" />

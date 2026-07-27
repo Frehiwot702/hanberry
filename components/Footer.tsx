@@ -49,12 +49,14 @@ const Footer = () => {
                             <div>
                                 <ul className='flex space-x-3 py-2 text-sm text-white/80'>
                                     <li className='hover:text-[#E7C9B6]'> 
-                                        <Link href=''>Instagram </Link>
+                                        <Link href='https://www.instagram.com/hamneal_nebiyu?igsh=NHU3dGF2Z256bjJ6&utm_source=qr'>Instagram </Link>
                                     </li>
                                     <li>|</li>
-                                    <li className='hover:text-[#E7C9B6]'> TikTok</li>    
+                                    <li className='hover:text-[#E7C9B6]'> 
+                                        <Link href='https://www.tiktok.com/@hamnealnebiyu?_r=1'>TikTok</Link></li>    
                                     <li>|</li>
-                                    <li className='hover:text-[#E7C9B6]'>Facebook</li>
+                                    <li className='hover:text-[#E7C9B6]'>
+                                        <Link href='#'>Facebook</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -70,8 +72,7 @@ const Footer = () => {
             
         <div className='bottom-0 border-t-2 border-white/20 px-5 md:px-0'>
             <h3 className='text-sm font-light text-center py-3 text-white/90'>Made with 💖 by 
-                <Link className='text-[#bda478ff]' href='https://t.me/betty_habtesh'> Bethelhem</Link> & 
-                <Link className='text-[#bda478ff]' href='https://t.me/fruittedi'> Frehiwot</Link> | © 2025 HanBerry Beauty — All Rights Reserved.</h3>
+                <Link className='text-[#bda478ff]' href='https://t.me/fruittedi'> B&F</Link> | © 2025 HanBerry Beauty — All Rights Reserved.</h3>
         </div>
     </div>
   )

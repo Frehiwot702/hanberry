@@ -361,9 +361,9 @@ const Masonry: React.FC<MasonryProps> = ({
       ))}
 
       {showReplaceWorkModal ? (
-        <div className="absolute top-0 inset-0 z-50 bg-black/20 flex items-center justify-center px-6">
-          <div className="w-full top-0 max-w-[860px] rounded-2xl bg-white p-8 shadow-xl flex flex-col overflow-y-auto">
-            <h3 className="text-[26px] font-medium text-center">Replace Work</h3>
+        <div className="absolute top-0 inset-0 z-50 bg-black/20 flex items-start justify-center px-2 md:px-6">
+          <div className="w-full top-0 rounded-2xl bg-white p-8 shadow-xl flex flex-col overflow-y-auto">
+            <h3 className="text-[20px] md:text-[26px] font-medium text-start">Replace Work</h3>
             {error && <p className="text-red-500 text-center mt-2">{error}</p>}
             <div className="mt-6 grid md:grid-cols-7 gap-6">
               <div className='col-span-3 w-full flex justify-center items-center'>
@@ -421,15 +421,15 @@ const Masonry: React.FC<MasonryProps> = ({
 
             
 
-            <div className="mt-16 flex items-center justify-center gap-4">
+            <div className="mt-16 grid md:grid-cols-2 items-center justify-center gap-4 md:gap-6">
               <button
                 type="button"
                 onClick={() => {setNewImage(null); setShowReplaceWorkModal(false);}}
-                className="h-[50px] px-8 border border-black/30 text-[20px]"
+                className="w-full h-[50px] px-8 border border-black/30 text-[16px] md:text-[20px]"
               >
                 Cancel
               </button>  
-              <button type="button" onClick={updateImage} className="h-[50px] px-8 bg-black text-white text-[20px]">
+              <button type="button" onClick={updateImage} className="w-full h-[50px] px-8 bg-black text-white text-[16px] md:text-[20px]">
                 {loading ? "replacing..." : "Submit"}
               </button>
             </div>

@@ -134,7 +134,7 @@ const Booking = () => {
   return (
     <>
       <div id='booking' className=" text-black bg-white py-16">
-        <div className="py-10 px-5 md:px-10">
+        <div className="py-10 px-3 md:px-10">
           <div className="w-full grid xl:grid-cols-3 md:px-16 gap-5 md:gap-16">
             <div className="w-full ">
               <div className="w-80 md:w-90 lg:w-full min-h-52 md:h-[700px] h-full relative p-2 md:p-6 z-40">
