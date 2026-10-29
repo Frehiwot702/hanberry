@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono, Quicksand } from "next/font/google";
-import { salvager } from "./lib/fonts";
+import { salvager, cormorant, worksans } from "./lib/fonts";
 import "./globals.css";
 
 // const geistSans = Geist({
@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${salvager.variable} antialiased`}
+        className={`${salvager.variable} ${cormorant.variable} ${worksans.variable} antialiased bg-[#FAF6F0]`}
       >
         {children}
       </body>

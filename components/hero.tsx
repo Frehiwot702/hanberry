@@ -35,7 +35,7 @@ const images = [
 
 function HeroSection() {
   return (
-    <div className="bg-white w-full overflow-hidden">
+    <div className=" w-full overflow-hidden">
       {/* Images Row */}
       <div className="grid grid-cols-4 justify-center items-center gap-2 md:gap-6 px-2 md:px-10 py-12">
         {images.map((img, index) => {
@@ -91,7 +91,7 @@ function HeroSection() {
       </div>
 
       {/* Scrolling Text */}
-      <div className="w-full overflow-hidden py-6 bg-white py-10 md:py-20">
+      <div className="w-full overflow-hidden py-10 md:py-20">
         <motion.div
           animate={{ x: ['0%', '-100%'] }}
           transition={{

@@ -1,4 +1,4 @@
-import { doc, addDoc, collection, getDocs, deleteDoc, updateDoc, onSnapshot} from "firebase/firestore";
+import { doc, addDoc, collection, getDocs, deleteDoc, updateDoc, onSnapshot, query, where} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Category } from "./category.service";
 
@@ -14,6 +14,8 @@ export type Package = {
   optional_notes: string;
   status: "active" | "inactive";
   categoryId: string;
+  coverImage: string;
+  isPopular: boolean;
   category: {
     name: string;
     status: "active" | "inactive";
@@ -57,11 +59,55 @@ export const fetchPackages = async (): Promise<Package[]> => {
         optional_notes: data.optional_notes,
         status: data.status,
         categoryId: data.categoryId,  
+        coverImage: data.coverImage,
+        isPopular: data.isPopular,
         category: {
           name: data.category.name,
           status: data.category.status
         }
       };
+  });
+}
+
+// : Promise<Package[]>
+export const fetchPackagesByCategorySlug = async ({slug}: {slug: string}) => {
+  const categoryQuery = query(collection(db, "categories"), where("slug", "==", slug));
+  const categorySnap = await getDocs(categoryQuery);
+
+  if (categorySnap.empty) {
+    return [];
+  }
+
+  const categoryDoc = categorySnap.docs[0];
+  const categoryId = categoryDoc.id;
+
+  const packagesQuery = query(
+    collection(db, "packages"),
+    where("categoryId", "==", categoryId)
+  );
+
+  const packagesSnap = await getDocs(packagesQuery);
+
+  return packagesSnap.docs.map((doc) => {
+    const data = doc.data();
+
+    return {
+      id: doc.id,
+      name: data.name,
+      description: data.description,
+      price: Number(data.price),
+      duration: data.duration,
+      includes: Array.isArray(data.includes) ? data.includes : [],
+      optional_notes: data.optional_notes ?? "",
+      status: data.status,
+      categoryId: data.categoryId,
+      coverImage: data.coverImage,
+      isPopular: data.isPopular,
+      category: {
+        name: data.category?.name ?? "",
+        status: data.category?.status ?? "inactive",
+      },
+    };
   });
 }
 
@@ -131,6 +177,8 @@ export const subscribePackages = (
             optional_notes: data.optional_notes,
             status: data.status,
             categoryId: data.categoryId,
+            coverImage: data.coverImage,
+            isPopular: data.isPopular,
             category: {
               name: data.category.name,
               status: data.category.status

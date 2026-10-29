@@ -25,7 +25,7 @@ const Gallery = () => {
   }
 
   return (
-    <div className='bg-white text-black pt-10 pb-12 md:pb-16 lg:pb-20'>
+    <div className=' text-black pt-10 pb-12 md:pb-16 lg:pb-20'>
         <div className='relative w-full md:h-fit'>
           <div className='px-5 md:px-10'>
             <Link href='/' >

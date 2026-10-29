@@ -30,11 +30,11 @@ export default function WorksInHome() {
   }
 
   return (
-    <div id='works' className="w-full h-fit bg-white font-poppins py-12 md:py-24 lg:py-24 relative">
+    <div id='works' className="w-full h-fit font-poppins py-12 md:py-24 lg:py-24 relative">
       <div className=" mx-auto relative">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-start mb-8 md:mb-12 px-4 md:px-16">
-          <h1 style={{fontFamily: 'salvager'}} className="text-4xl md:text-6xl mb-3 md:mb-5 text-black">Elegant & Luxury Makeup Works</h1>
-          <p className="text-black text-md">Explore a curated selection of makeup looks, each crafted to enhance natural beauty and personal style.</p>
+          <h1 className="text-4xl md:text-6xl mb-3 md:mb-5 text-black">Elegant & Luxury Makeup Works</h1>
+          <p className="text-[#4C3C32] text-lg">Explore a curated selection of makeup looks, each crafted to enhance natural beauty and personal style.</p>
         </motion.div>
         <div className='relative w-full md:h-fit'>
           <div className='absolute z-40 bg-gradient-to-b from-transparent via-transparent to-white w-full h-full'>.</div>

@@ -7,15 +7,17 @@ export type Booking = {
   fullname: string;
   phone: string;
   date: string;
+  time?: string | null;
+  notes?: string | null;
   package: {
     id: string;
     name: string;
     price: number;
-  }  
+  }
   duration: string;
   email: string | null;
   quantity: number;
-  totalPrice: number; 
+  totalPrice: number;
   status: "pending" | "confirmed" | "rejected" | "done"
 }
 
@@ -23,15 +25,17 @@ export type AddBookingRequest = {
   fullname: string;
   phone: string;
   date: string;
+  time?: string | null;
+  notes?: string | null;
   package: {
     id: string;
     name: string;
     price: number;
-  }  
+  }
   duration: string;
   email: string | null;
   quantity: number;
-  totalPrice: number; 
+  totalPrice: number;
 }
 
 const bookingRef = collection(db, "bookings");
@@ -53,15 +57,17 @@ export const fetchBookings = async () => {
     const data = doc.data();
 
     return {
-      id: doc.id, 
+      id: doc.id,
       fullname: data.fullname,
       phone: data.phone,
       date: data.date,
+      time: data.time ?? null,
+      notes: data.notes ?? null,
       package: {
         id: data.package.id,
         name: data.package.name,
         price: data.package.price,
-      }, 
+      },
       duration: data.duration,
       email: data.email || null,
       quantity: data.quantity,
@@ -99,11 +105,13 @@ export const subscribeBookingRequests = (
             fullname: data.fullname,
             phone: data.phone,
             date: data.date,
+            time: data.time ?? null,
+            notes: data.notes ?? null,
             package: {
               id: data.package.id,
               name: data.package.name,
               price: data.package.price,
-            }, 
+            },
             duration: data.duration,
             email: data.email || null,
             quantity: data.quantity,

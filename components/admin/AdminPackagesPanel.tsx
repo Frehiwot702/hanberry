@@ -297,7 +297,7 @@ export function AdminPackagesPanel({
                       onClick={() => onTogglePackage(expanded ? null : pkg.id)}
                       className="w-full flex items-center justify-between text-left"
                     >
-                      <span className="text-[24px] font-medium">{pkg.name}</span>
+                      <h3> <span className="text-[24px] font-medium">{pkg.name}</span> <span>{pkg.categoryId}</span></h3>
                       <span className="text-[26px] leading-none">{expanded ? "⌃" : "⌄"}</span>
                     </button>
                     {expanded ? (

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Book from './forms/Book';
 import { Category, subscribeCategories } from '@/app/services/category.service';
 import { Package, subscribePackages } from '@/app/services/package.service';
+import posthog from 'posthog-js';
 
 // type BookingCategory = { id: number; name: string; sort_order: number; active: boolean };
 // type BookingPackage = { id: number; category_id: number; name: string; type: string; description: string; price: number; duration: string; optional_note: string | null; includes: string[]; image_url: string | null; sort_order: number; active: boolean };
@@ -184,7 +185,12 @@ const Booking = () => {
                           <p>Price: {type.price} <b>ETB</b></p>
                           {type.optional_notes ? <p className='text-black/50 text-sm text-center py-5'>{type.optional_notes}</p> : '' }
                         </div>
-                        <button className="my-2 relative bottom-0 w-full bg-black text-white py-2 md:py-3 cursor-pointer border-2 border-black hover:text-black hover:bg-white" onClick={() => { setOpenForm(true); setBooked(typeIndex + i); }}>
+                        <button className="my-2 relative bottom-0 w-full bg-black text-white py-2 md:py-3 cursor-pointer border-2 border-black hover:text-black hover:bg-white" 
+                                onClick={() => { 
+                                  setOpenForm(true);  
+                                  setBooked(typeIndex + i); 
+                                  posthog.capture("Book now clicked.", {location: "Packages section"})
+                                }}>
                           Book now
                         </button>
                       </div>

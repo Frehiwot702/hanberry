@@ -17,7 +17,7 @@ const Footer = () => {
             </div>
             <div className='grid md:grid-cols-3 gap-10 col-span-4'>
                 <div className='space-y-3'>
-                    <h3 style={{fontFamily: 'salvager'}} className='text-3xl md:text-4xl font-semibold'>Stay Connected to the future of Hanberry Beauty</h3>
+                    <h3 className='text-3xl md:text-4xl'>Stay Connected to the future of Hanberry Beauty</h3>
                     <p className='text-sm text-white/70'>hami0935712362@gmail.com</p>
                 </div>
                 <div className='md:mx-auto space-y-3'>
@@ -61,8 +61,8 @@ const Footer = () => {
                             </div>
                         </div>
                         <div className='border-t-2 border-white/20 pt-5 mb-0'>
-                            <h3 className='text-xl text-white/50 font-bold'>BEAUTY</h3>
-                            <h3 className='text-[3em] md:text-[5em] xl:text-[8.5em] font-bold'>HANBERRY</h3>
+                            <h3 className='text-xl text-white/50'>BEAUTY</h3>
+                            <h3 className='text-[3em] md:text-[5em] xl:text-[8.5em]'>HANBERRY</h3>
                         </div>
                     </div>
                 </div>

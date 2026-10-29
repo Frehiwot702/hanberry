@@ -4,16 +4,16 @@ import Link from 'next/link'
 
 const Videos = () => {
   return (
-    <div className='w-full py-16 bg-white text-black px-5 md:px-16'>
+    <div className='w-full py-16 text-black px-5 md:px-16'>
         <div className='grid md:grid-cols-2 gap-10 py-10'>
-            <div className='space-y-5'>
+            <div className='w-full space-y-5'>
                 <h3 
-                  style={{fontFamily: 'salvager'}}
+                  // style={{fontFamily: 'salvager'}}
                   className='text-4xl md:text-6xl pt-16 font-light'>From consultation to the final touch, every look is crafted with care and precision.</h3>
-                <p className='text-md text-black'>A glimpse into our studio, showcasing real transformations, premium products, and the artistry behind every look.</p>
-                <div className='mt-5'>
-                  <Link 
-                    className="w-fit bg-black text-white py-2 md:py-3 px-10 cursor-pointer border-2 border-black hover:text-black hover:bg-white"
+                <p className='text-lg text-[#4C3C32]'>A glimpse into our studio, showcasing real transformations, premium products, and the artistry behind every look.</p>
+                <div className='mt-16 w-full'> 
+                    <Link 
+                    className="block w-full bg-[#231814] text-white py-6 md:py-3 px-10 cursor-pointer hover:bg-[#AD8A55]  text-center text-2xl"
                     href='/#booking'>Book Now</Link>
                 </div>
             </div>

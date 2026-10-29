@@ -7,23 +7,27 @@ import MakeupGallery from '@/components/makeups';
 import WorksInHome from '@/components/worksinhome';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import Booking from '@/components/Booking';
 import Videos from '@/components/Videos';
+import Providers from '@/components/postHogProvider';
+import Services from '@/components/Services';
 
 export default function Home() {
   return (
-    <div>
-      <Navbar />
-      <HeroSection/>
-      <MakeupIntro/>
-      <Videos/>
-      <MakeupGallery/>
-      <Booking/>
-      <WorksInHome/>
-      <AboutHamneal/>
-      <Features/>   
-      <Contact/>
-      <Footer/>
-    </div>
+    <Providers>
+      <div style={{fontFamily: 'cormorant'}}>
+        <Navbar />
+        <HeroSection/>
+        <MakeupIntro/>
+        <Videos/>
+        <MakeupGallery/>
+        <Services/>
+        {/* <Booking/> */}
+        <WorksInHome/>
+        <AboutHamneal/>
+        <Features/>   
+        <Contact/>
+        <Footer/>
+      </div>
+    </Providers>
   );
 }

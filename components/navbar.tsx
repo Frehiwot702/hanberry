@@ -20,8 +20,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div ref={ref} className='w-full bg-white text-black px-10 shadow-2xl'>
-        <div className="w-full py-3 md:flex items-center justify-between space-x-5 md:space-x-16 border-b-2 border-gray-200">
+      <div ref={ref} className='w-full text-black px-10 shadow-2xl'>
+        <div className="w-full py-3 hidden md:flex items-center justify-between space-x-5 md:space-x-16 border-b-2 border-gray-200">
           <div className="flex items-center space-x-3 text-sm">
             {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-fill" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
@@ -38,7 +38,7 @@ export default function Navbar() {
       </div>
       {/* desktop menu */}
       <nav
-        className={`hidden w-full md:grid grid-cols-3 items-center justify-between px-10 py-4 bg-white shadow-sm ${poppins.className}`}
+        className={`hidden w-full md:grid grid-cols-3 items-center justify-between px-10 py-4 bg-[#FAF6F0]`}
       >
         {/* Left links with divider */}
         <div className="flex flex-col items-start">

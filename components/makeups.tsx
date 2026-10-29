@@ -43,7 +43,7 @@ export default function MakeupGallery() {
   const currentStyle = makeupStyles[activeIndex];
 
   return (
-    <div className="w-full bg-white py-6 md:py-8 lg:py-24">
+    <div className="w-full py-6 md:py-8 lg:py-24">
       <div className="px-4 md:px-16">
         {/* Top Divider Line */}
         {/* <div className="h-px bg-[#F8E7E3] mb-6 md:mb-8"></div> */}
@@ -57,7 +57,7 @@ export default function MakeupGallery() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl mb-10 md:mb-8 text-black"
-            style={{fontFamily: 'salvager'}}
+            // style={{fontFamily: 'salvager'}}
             // style={{ fontFamily: 'Georgia, serif' }}
           >
             Makeup Crafted for Every Occasion
@@ -75,10 +75,10 @@ export default function MakeupGallery() {
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-black">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl mb-4 text-black">
                     {currentStyle.title}
                   </h2>
-                  <p className="text-base text-md text-black leading-relaxed max-w-2xl">
+                  <p className="text-base text-lg leading-relaxed max-w-2xl text-[#4C3C32]">
                     {currentStyle.description}
                   </p>
                 </motion.div>

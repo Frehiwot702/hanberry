@@ -133,7 +133,8 @@ export default function AdminPage() {
         }
       );
     return () => unsubscribe(); 
-  }, [bookingRequests]);
+  }, []); 
+   
 
   // for updating works images data when changed
   useEffect(() => { 
