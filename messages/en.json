@@ -1,0 +1,14 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "works": "Works",
+    "services": "Services",
+    "artist": "The Artist",
+    "aboutArtist": "About the Artist",
+    "contact": "Contact",
+    "bookNow": "Book Now",
+    "language": "Language",
+    "en": "English",
+    "am": "አማርኛ"
+  }
+}

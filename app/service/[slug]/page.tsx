@@ -110,7 +110,8 @@ const ServiceDetail = () => {
         quantity: number;
         status: 'pending' | 'confirmed' | 'rejected' | 'done';
         submittedAt: string;
-    } | null>({
+    } | null>(
+        {
         id: '1',
         fullname: 'frehiwot tewodros',
         email: null,
@@ -123,7 +124,11 @@ const ServiceDetail = () => {
         quantity: 1,
         status: 'done',
         submittedAt: '12/12/2026'
-    });
+    }
+    );
+
+    // test data 
+    
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -342,7 +347,7 @@ const ServiceDetail = () => {
 
                                         <div className='flex flex-1 flex-col gap-4 p-5'>
                                             <div className='flex items-start justify-between gap-3'>
-                                                <h3 className='text-2xl font-bold leading-tight first-letter:uppercase'>{pkg.name}</h3>
+                                                <h3 className='text-xl font-bold leading-tight first-letter:uppercase'>{pkg.name}</h3>
                                                 <span className='rounded-full border border-[#E8E1D9] bg-[#F7F4F1] px-2.5 py-1 text-sm font-semibold text-black'>
                                                     {pkg.price.toLocaleString()} ETB
                                                 </span>
@@ -403,7 +408,7 @@ const ServiceDetail = () => {
 
                         <div className='mb-8'>
                             <h3 className='text-2xl' style={{fontFamily: 'cormorant'}}>Personal Information</h3>
-                            <p className='text-sm'>So we know who we are preparing for</p>
+                            <p className='text-sm text-black/50'>So we know who we are preparing for</p>
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
                                 <div>
                                     <label className='mb-2 block text-sm font-semibold text-black'>Full Name</label>
@@ -442,9 +447,9 @@ const ServiceDetail = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='mb-8'>
+                        <div className='mb-8 mt-5'>
                             <h3 className='text-2xl' style={{fontFamily: 'cormorant'}}>Appointment</h3>
-                            <p className='text-sm'>When you would like to schedule your appointment</p>
+                            <p className='text-sm text-black/50'>When you would like to schedule your appointment</p>
 
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
 
@@ -543,7 +548,7 @@ const ServiceDetail = () => {
                                 </div>
                                 <p className='text-3xl' style={{fontFamily: 'cormorant'}}>Your request has been sent</p> 
                             </div>
-                            <p>We've recieved your booking request and will confirm your appointment shortly.  We will reach out to you to finalize the details.</p>
+                            <p>We have recieved your booking request and will confirm your appointment shortly.  We will reach out to you to finalize the details.</p>
                         </div>
 
                         <div className='mt-10'>
@@ -551,17 +556,25 @@ const ServiceDetail = () => {
                                 <h3>Full Name </h3>
                                 <p className='first-letter:uppercase'>{submittedBooking.fullname}</p>
                             </div>
-                            <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] pb-4'>
+                            <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
                                 <h3>Phone </h3>
-                                <p className='first-letter:uppercase'>{submittedBooking.fullname}</p>
+                                <p className='first-letter:uppercase'>{submittedBooking.phone}</p>
+                            </div>
+                            <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
+                                <h3>Package </h3>
+                                <p className='first-letter:uppercase'>{submittedBooking.packageName}</p>
+                            </div>
+                            <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
+                                <h3>Total Price </h3>
+                                <p className='first-letter:uppercase'>{submittedBooking.totalPrice} ETB</p>
                             </div>
                         </div>
 
-                        <div className='mt-6 rounded-xl border border-[#E4E0DB] p-4'>
-                            <p className='text-sm text-gray-600'>Disclaimer!</p> 
-                            <p className='mt-2 text-sm text-gray-600'> This booking is for availability checking only. Confirmation and payment process will be arranged directly with the makeup artist. </p>
+                        <div className='mt-6 rounded-xl border border-red-500 text-red-500 p-4'>
+                            <p className='text-lg font-semibold'>Disclaimer!</p> 
+                            <p className='mt-2 text-sm'> This booking is for availability checking only. Confirmation and payment process will be arranged directly with the makeup artist. </p>
                         </div>
-
+ 
                         <div className='mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between'>
                             <Link href='/' className='rounded-full border border-black px-6 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-black hover:text-white'>
                                 Back to Homepage

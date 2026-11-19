@@ -59,14 +59,14 @@ export default function HanberryFeaturesPage() {
       // style={{ backgroundImage: "url('/images/b1.png')" }}
     >
       <div className='py-16'>
-        <h3 className='text-[#4C3C32] uppercase text-center'>The hanberry Standard</h3>
+        <h3 className='text-[#AD8A55] uppercase text-center'>The hanberry Standard</h3>
         <h2 className='text-4xl md:text-7xl text-center mt-3 text-black'>Gentle on the skin, Uncompromising on finish.</h2>
-        <div className='relative pt-10'>
+        <div className='relative pt-10 md:pt-24'>
           <div className='grid md:grid-cols-4 gap-5 md:gap-16'>
             {features.map((feat) => (
-              <div key={feat.num} className='space-y-5'>
+              <div key={feat.num} className={`space-y-2 pl-4 md:pl-16 ${feat.num !== 1 ? 'md:border-l md:border-gray-200' : ''}`}>
                 {/* <div className='opacity-80'>{feat.svg}</div> */}
-                <h6 className='text-2xl text-[#4C3C32]'>0{feat.num}</h6>
+                <h6 className='text-2xl text-[#AD8A55]'>0{feat.num}</h6>
                 <h3 className='text-2xl md:text-4xl py-2 mt-4 text-black'>{feat.title}</h3>
                 <p className='text-lg text-[#4C3C32]'>{feat.text}</p>
               </div>

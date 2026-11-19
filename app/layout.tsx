@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono, Quicksand } from "next/font/google";
 import { salvager, cormorant, worksans } from "./lib/fonts";
 import "./globals.css";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "HanBerry Beauty",
@@ -41,17 +32,22 @@ export const metadata: Metadata = {
   ]
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${salvager.variable} ${cormorant.variable} ${worksans.variable} antialiased bg-[#FAF6F0]`}
       >
-        {children}
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
