@@ -100,8 +100,7 @@ const Book = ({pkg, onClose} : {pkg: {
                         />
                     </div>
                     <h3 
-                        className='text-3xl md:text-5xl font-extrabold'
-                        style={{fontFamily: 'salvager'}}
+                        className='font-brand text-3xl md:text-5xl font-extrabold'
                     >Booking Form</h3>
 
                     <h5 className='text-lg font-light mt-10'>Package detail</h5>

@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { salvager, cormorant, worksans } from "./lib/fonts";
+
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import {
+  salvager,
+  cormorant,
+  worksans,
+  notoSerif,
+  notoSans
+} from "../lib/fonts";
 
 export const metadata: Metadata = {
   title: "HanBerry Beauty",
@@ -41,9 +48,12 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      className={`${salvager.variable} ${cormorant.variable} ${worksans.variable} ${notoSerif.variable} ${notoSans.variable}`}
+    >
       <body
-        className={`${salvager.variable} ${cormorant.variable} ${worksans.variable} antialiased bg-[#FAF6F0]`}
+        className="antialiased bg-[#FAF6F0]"
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}

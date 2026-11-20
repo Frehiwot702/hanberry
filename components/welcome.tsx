@@ -1,13 +1,14 @@
 "use client";
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Poppins, Italianno } from 'next/font/google';
+import { useTranslations } from 'next-intl' 
+// import { Poppins, Italianno } from 'next/font/google';
 
-import { salvager } from '@/app/lib/fonts';
+// import { salvager } from '@/app/lib/fonts';
 import Link from 'next/link';
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['300','400','500','600','700'], display: 'swap' });
-const italianno = Italianno({ subsets: ['latin'], weight: ['400'], display: 'swap' });
+// const poppins = Poppins({ subsets: ['latin'], weight: ['300','400','500','600','700'], display: 'swap' });
+// const italianno = Italianno({ subsets: ['latin'], weight: ['400'], display: 'swap' });
 
 // Simple typing animation: renders characters with staggered opacity/translateY
 function TypingText({ text, className = '', delay = 0, charDelay = 0.03 }: { text: string; className?: string; delay?: number; charDelay?: number }) {
@@ -45,9 +46,11 @@ function TypingText({ text, className = '', delay = 0, charDelay = 0.03 }: { tex
 }
 
 function MakeupIntro() {
+  const t = useTranslations("Welcome");
+  const g = useTranslations();
   return (
 
-    <div className="w-full bg-[#231814] text-white flex flex-col lg:flex-row">
+    <div className="w-full bg-[#231814] text-white flex flex-col lg:flex-row font-body">
       {/* Left Image bg-[#E7C9B6] */}
 
       <div className="w-full lg:w-1/2 h-screen overflow-hidden relative">
@@ -58,21 +61,21 @@ function MakeupIntro() {
       <div className="w-full lg:w-1/2 flex flex-col">
         {/* Text Area */}
         <div className="p-6 lg:p-16 flex-1 lg:max-w-4xl">
-          <p className="text-xl lg:text-3xl mb-3 font-light">
-            <TypingText text="Welcome" delay={0.1} charDelay={0.14} />
+          <p className="text-lg tracking-tight text-[#AD8A55] uppercase">
+            <TypingText text={t("welcome")} delay={0.1} charDelay={0.14} />
           </p>
           <h1 className="text-4xl lg:text-5xl leading-tight">
-            <h3 className='text-4xl lg:text-6xl leading-tight'> Dive into the world of makeup beauty </h3>
+            <h3 className='text-4xl lg:text-6xl leading-tight font-heading'> {t("welcomeMessage")} </h3>
           </h1>
-          <p className={`text-md lg:text-xl text-white/80 max-w-2xl`}>
-            “At Hanberry Beauty Lounge, beauty is more than makeup — it’s confidence, self-expression, and artistry.” – Hamneal N.
+          <p className={`text-md lg:text-xl text-white/80 max-w-2xl font-body`}>
+            “{t("hanberryQuote")}” – {g("hamneal")} {g("nebiyu")}
           </p>
           <div className='mt-8'>
             <Link
                 href='/#works'
                 className='bg-[#AD8A55] w-fit text-black text-lg hover:bg-[#d6ac6d] transition-colors duration-300 py-3 px-8 rounded-full flex items-center justify-center gap-5 cursor-pointer text-center '
             >
-                Explore Our Work
+                {t("exploreWork")}
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
             </Link>
           </div>

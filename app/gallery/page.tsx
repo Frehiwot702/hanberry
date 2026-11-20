@@ -35,7 +35,7 @@ const Gallery = () => {
             </Link>
           </div>
           <div className='mx-auto flex items-start justify-center py-10'>
-              <motion.h1 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-4xl md:text-6xl mb-10 md:mb-8 text-black" style={{fontFamily: 'salvager'}}>
+              <motion.h1 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="font-brand text-4xl md:text-6xl mb-10 md:mb-8 text-black">
                 Gallery
               </motion.h1>
           </div>

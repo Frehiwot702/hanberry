@@ -92,7 +92,7 @@ const ServiceDetail = () => {
 
     const [allPackages, setAllPackages] = useState<Package[]>([]);
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
-    const [currentStep, setCurrentStep] = useState(3);
+    const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(true);
     const [bookingForm, setBookingForm] = useState<BookingFormState>(defaultBookingForm);
     const [bookingError, setBookingError] = useState('');
@@ -110,25 +110,23 @@ const ServiceDetail = () => {
         quantity: number;
         status: 'pending' | 'confirmed' | 'rejected' | 'done';
         submittedAt: string;
-    } | null>(
-        {
-        id: '1',
-        fullname: 'frehiwot tewodros',
-        email: null,
-        phone: '0979006009',
-        date: '12/2/2026',
-        time: '09:89 PM',
-        packageName: 'Birdal',
-        packagePrice: 12000,
-        totalPrice: 12000,
-        quantity: 1,
-        status: 'done',
-        submittedAt: '12/12/2026'
-    }
-    );
+    } | null>(null);
 
     // test data 
-    
+    // {
+    //     id: '1',
+    //     fullname: 'frehiwot tewodros',
+    //     email: null,
+    //     phone: '0979006009',
+    //     date: '12/2/2026',
+    //     time: '09:89 PM',
+    //     packageName: 'Birdal',
+    //     packagePrice: 12000,
+    //     totalPrice: 12000,
+    //     quantity: 1,
+    //     status: 'done',
+    //     submittedAt: '12/12/2026'
+    // }
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -284,7 +282,7 @@ const ServiceDetail = () => {
                 </Link>
 
                 <div className='flex flex-col gap-3 mb-10 mt-5'>
-                    <h3 className='first-letter:uppercase text-4xl md:text-5xl' style={{fontFamily: 'cormorant'}}>{categoryTitle} Makeup Packages</h3>
+                    <h3 className='font-heading first-letter:uppercase text-4xl md:text-5xl'>{categoryTitle} Makeup Packages</h3>
                     <p className='text-gray-700'>Choose the perfect packages for your special day</p>
                 </div>
 
@@ -407,7 +405,7 @@ const ServiceDetail = () => {
                         </div> */}
 
                         <div className='mb-8'>
-                            <h3 className='text-2xl' style={{fontFamily: 'cormorant'}}>Personal Information</h3>
+                            <h3 className='font-heading text-2xl'>Personal Information</h3>
                             <p className='text-sm text-black/50'>So we know who we are preparing for</p>
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
                                 <div>
@@ -448,7 +446,7 @@ const ServiceDetail = () => {
                             </div>
                         </div>
                         <div className='mb-8 mt-5'>
-                            <h3 className='text-2xl' style={{fontFamily: 'cormorant'}}>Appointment</h3>
+                            <h3 className='font-heading text-2xl'>Appointment</h3>
                             <p className='text-sm text-black/50'>When you would like to schedule your appointment</p>
 
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
@@ -546,7 +544,7 @@ const ServiceDetail = () => {
                                 <div className={`flex h-12 w-12 items-center justify-center rounded-full border text-sm font-semibold border-[#6B7A5E] bg-[#6B7A5E] text-white mx-auto `}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#ffffff" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg> 
                                 </div>
-                                <p className='text-3xl' style={{fontFamily: 'cormorant'}}>Your request has been sent</p> 
+                                <p className='font-heading text-3xl'>Your request has been sent</p>
                             </div>
                             <p>We have recieved your booking request and will confirm your appointment shortly.  We will reach out to you to finalize the details.</p>
                         </div>

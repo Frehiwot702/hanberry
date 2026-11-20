@@ -2,11 +2,18 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import CountUp from './CountUp';
+import { useTranslations } from 'next-intl';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
+
+type stat = {
+  value: number;
+  label: string;
+  side: string;
+}
 
 const imageRotate = {
   hidden: { opacity: 0, rotate: -8, scale: 0.9 },
@@ -28,7 +35,7 @@ const numberScale = {
   },
 } as const;
 
-const stats = [
+const stats: stat[] = [
   {
     value: 100,
     label: "Happy Clients",
@@ -52,8 +59,13 @@ const stats = [
 ];
 
 export default function AboutHamneal() {
+
+  const t = useTranslations("AboutTheArtist");
+  const g = useTranslations();
+
+
   return (
-    <div id='about' className="w-full font-poppin">
+    <div id='about' className="w-full font-body">
       {/* Top Section - Light Brown Background */}
       <div className="bg-[#231814] text-white py-8 md:py-12 lg:py-16 min-h-screen h-full">
         <div className="px-4 sm:px-8 lg:px-16">
@@ -68,7 +80,7 @@ export default function AboutHamneal() {
               <div className="relative h-full w-full max-w-full md:max-w-[70%] h-full max-h-[900px] pl-4 mx-auto my-auto">
                 <Image
                   src="/images/ham.PNG"
-                  alt="Hamneal Nebiyu"
+                  alt={t("hamneal") + " " + t("nebiyu")}
                   fill
                   // sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover rounded-lg"
@@ -85,19 +97,19 @@ export default function AboutHamneal() {
               className="flex flex-col gap-6 md:px-10"
             >
               <h2 className="text-lg tracking-tight text-[#AD8A55] uppercase">
-                The artist
+                {t("theArtist")}
               </h2>
 
-              <h2 className="text-4xl md:text-5xl lg:text-7xl tracking-tight">
-                Hamneal <span className='text-[#AD8A55]'>Nebiyu</span>
+              <h2 className="text-4xl md:text-5xl lg:text-7xl tracking-tight font-heading">
+                {g("hamneal")} <span className='text-[#AD8A55]'>{g("nebiyu")}</span>
               </h2>
               
-              <div className="flex flex-col gap-3 text-lg md:text-base leading-relaxed text-[#E3D5C3]">
-                <p className='text-justify leading-7'>
-                  Hamneal Nebiyu is a professional makeup artist with over twelve years of experience in the beauty industry. She has built a reputation for excellence, artistry, and timeless elegance that extends internationally. Internationally certified, Hamneal has collaborated with numerous global beauty companies and events, showcasing her skill and creative vision across diverse platforms.
+              <div className="flex flex-col gap-3 text-sm md:text-base leading-relaxed text-[#E3D5C3]">
+                <p className='text-justify leading-7 font-light'>
+                  {t("aboutOne")}
                 </p>
-                <p>
-                  As the owner and general manager of a luxury beauty lounge, she has successfully managed every aspect of the business — from staff training and client relations to maintaining the highest standards of service and artistry. Her dedication to perfection and her passion for empowering others through beauty have made her a trusted name in the industry.
+                <p className='text-justify leading-7 font-light'>
+                  {t("aboutTwo")}
                 </p>
               </div>
               {/* Bottom Section - White Background with Statistics */}
@@ -119,12 +131,12 @@ export default function AboutHamneal() {
                           viewport={{ once: true, amount: 0.3 }}
                           variants={numberScale}
                           transition={{ delay: index * 0.1 }}
-                          className="text-4xl md:text-5xl lg:text-6xl mb-2"
+                          className="text-4xl md:text-5xl lg:text-6xl mb-2 font-heading"
                         >
                           <CountUp to={stat.value} from={0} side={stat.side}/>
                         </motion.div>
                         <div className="text-sm md:text-base font-medium text-[#E3D5C3]">
-                          {stat.label}
+                          {t(stat.label)}
                         </div>
                       </motion.div>
                     ))}

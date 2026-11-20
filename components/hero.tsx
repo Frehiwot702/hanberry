@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslations } from "next-intl";
 
 const images = [
   {
@@ -34,6 +35,7 @@ const images = [
 // (floatVariants removed — using per-item animate/transition props instead)
 
 function HeroSection() {
+  const t = useTranslations("Hero");
   return (
     <div className=" w-full overflow-hidden">
       {/* Images Row */}
@@ -103,9 +105,9 @@ function HeroSection() {
         >
           {Array(10).fill(
             <>
-              <span key={1} className="text-[#8B7A5D]">BE YOUR OWN KIND OF BEAUTY  </span>
+              <span key={1} className="text-[#8B7A5D] uppercase"> {t("hanberrySlogan")} </span>
               <span key={2} className='text-black'> | </span>
-              <span key={3} className="text-black">BE YOUR OWN KIND OF BEAUTY </span>
+              <span key={3} className="text-black uppercase"> {t("hanberrySlogan")} </span>
               <span key={4} className='text-black'> |</span>
             </>
           )}

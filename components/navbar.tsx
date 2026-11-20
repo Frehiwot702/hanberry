@@ -1,16 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Poppins } from "next/font/google";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "./LanguageSelector";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
 
 export default function Navbar() {
   const t = useTranslations("Navbar");
@@ -19,7 +12,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div ref={ref} className='w-full text-black px-10 shadow-2xl'>
+      {/* <div ref={ref} className='w-full text-black px-10 shadow-2xl font-body'>
         <div className="w-full py-3 hidden md:flex items-center justify-between space-x-5 md:space-x-16 border-b-2 border-gray-200">
           <div className="flex items-center space-x-3 text-sm">
             <h3>+251 935 71 23 62 | +251 914 67 16 13</h3>
@@ -28,10 +21,10 @@ export default function Navbar() {
             <h3>hami0935712362@gmail.com</h3>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* desktop menu */}
       <nav
-        className={`hidden w-full md:grid grid-cols-3 items-center justify-between px-10 py-4 bg-[#FAF6F0]`}
+        className={`hidden w-full md:grid grid-cols-3 items-center justify-between px-10 py-4 bg-[#FAF6F0] font-body`}
       >
         {/* Left links with divider */}
         <div className="flex flex-col items-start">

@@ -14,7 +14,7 @@ import Services from '@/components/Services';
 export default function Home() {
   return (
     <Providers>
-      <div style={{fontFamily: 'cormorant'}}>
+      <div className='font-body'>
         <Navbar />
         <HeroSection/>
         <MakeupIntro/>

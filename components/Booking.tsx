@@ -148,12 +148,12 @@ const Booking = () => {
                 <div className="absolute border-4 border-white z-50 w-full h-full" />
               </div>
               <div className="absolute z-50">
-                <h3 style={{fontFamily: 'salvager'}} className=" bg-black text-white px-5 py-4 text-3xl">Packages & Prices</h3>
+                <h3 className="font-brand bg-black text-white px-5 py-4 text-3xl">Packages & Prices</h3>
               </div>
             </div>
 
             <div className="relative col-span-2 space-y-4 md:px-0 mt-10 md:mt-0 z-50">
-              <h3 style={{fontFamily: 'salvager'}} className="text-4xl md:text-6xl py-5">Because being beautiful should never harm you</h3>
+              <h3 className="font-brand text-4xl md:text-6xl py-5">Because being beautiful should never harm you</h3>
 
               <div className="flex space-x-5 flex-wrap">
                 {grouped.sort((a, b) => a.order - b.order).map((p, idx) => (
