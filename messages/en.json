@@ -127,9 +127,9 @@
     "selected": "Selected",
     "popular": "Popular",
     "Engagement": "Engagement",
-    "Bridal": "Bridal",
-    "Bridesmaid": "Bridesmaid",
-    "Glam": "Glam",
+    "bridal": "Bridal",
+    "bridesmaid": "Bridesmaid",
+    "glam": "Glam",
     "Normal": "Normal",
     "Gold": "Gold",
     "Mels": "Mels",
@@ -154,11 +154,12 @@
     "Enter your full name": "Enter your full name",
     "Phone Number": "Phone Number",
     "Email (optional)": "Email (optional)",
+    "Appointment": "Appointment",
     "When you would like to schedule your appointment": "When you would like to schedule your appointment",
     "Preferred Date": "Preferred Date",
     "Preferred Time": "Preferred Time",
     "Number of People": "Number of People",
-    "Review & Submit": "Review & Submit",
+    "Review & Submit": "Submit",
     "Back to Packages": "Back to Packages",
     "Your request has been sent": "Your request has been sent",
     "requestSuccess": "We have recieved your booking request and will confirm your appointment shortly. We will reach out to you to finalize the details.",
@@ -167,6 +168,10 @@
     "disclaimer": "Disclaimer!",
     "disclaimerMessage": "This booking is for availability checking only. Confirmation and payment process will be arranged directly with the makeup artist.",
     "backToHomepage": "Back to Homepage",
-    "bookAnotherPackage": "Book Another Package"
+    "bookAnotherPackage": "Book Another Package",
+    "form filling error": "Please fill in your name, phone number, appointment date, and preferred time.",
+    "select package error": "Please select a package before submitting",
+    "incorrect phone number format": "Please enter a valid phone number starting with 9 and containing 9 digits.",
+    "booking failed message": "There was a problem submitting your booking. Please try again."
   }
 }

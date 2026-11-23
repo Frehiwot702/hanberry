@@ -6,6 +6,8 @@ import { Package, fetchPackagesByCategorySlug } from '@/app/services/package.ser
 import { createBooking, AddBookingRequest } from '@/app/services/booking.servce';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import { useTranslations, useLocale } from "next-intl"
+import { ta } from 'zod/v4/locales';
 
 type BookingFormState = {
     fullname: string;
@@ -32,6 +34,8 @@ const Stepper = ({ currentStep }: { currentStep: number }) => {
         'Confirmation',
     ];
 
+    const t = useTranslations("packageDetail");
+
     return (
         <div className='mb-10 w-full'>
             <div className='mx-auto flex items-center justify-between gap-3 px-2 md:gap-6'>
@@ -43,7 +47,7 @@ const Stepper = ({ currentStep }: { currentStep: number }) => {
                     return (
                         <div key={step} className='flex flex-1 items-center'>
                             <div className='flex w-full items-end justify-between gap-2 md:gap-3'>
-                                <div className='flex items-center gap-2 md:gap-3'>
+                                <div className='flex items-center gap-2 md:gap-3'> 
                                     <div
                                         className={`flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold ${
                                             isCompleted
@@ -57,7 +61,7 @@ const Stepper = ({ currentStep }: { currentStep: number }) => {
                                     </div>
                                     <div className='hidden sm:block'>
                                         <p className={`text-xs font-medium tracking-[0.12em] text-gray-600`}>
-                                            {step}
+                                            {(t(step))}
                                         </p>
                                     </div>
                                 </div>
@@ -128,6 +132,11 @@ const ServiceDetail = () => {
     //     submittedAt: '12/12/2026'
     // }
 
+    const t = useTranslations("packageDetail");
+    const locale = useLocale();
+
+    console.log({locale})
+
     useEffect(() => {
         const fetchPackages = async () => {
             if (!categorySlug) {
@@ -158,6 +167,7 @@ const ServiceDetail = () => {
     }, [allPackages, selectedPackage]);
 
     const categoryTitle = categorySlug ? categorySlug.replace(/-/g, ' ') : 'Services';
+    console.log({categoryTitle});
 
     const updateFormField = <K extends keyof BookingFormState>(field: K, value: BookingFormState[K]) => {
         setBookingForm((prev) => ({ ...prev, [field]: value }));
@@ -178,18 +188,18 @@ const ServiceDetail = () => {
 
     const handleSubmitBooking = async () => {
         if (!selectedPackage) {
-            setBookingError('Please select a package before submitting.');
+            setBookingError('select package error');
             return;
         }
 
         if (!bookingForm.fullname.trim() || !bookingForm.phone.trim() || !bookingForm.date || !bookingForm.time) {
-            setBookingError('Please fill in your name, phone number, appointment date, and preferred time.');
+            setBookingError('form filling error');
             return;
         }
 
         const phoneNumber = bookingForm.phone.replace(/\D/g, '');
         if (!/^9\d{8}$/.test(phoneNumber)) {
-            setBookingError('Please enter a valid phone number starting with 9 and containing 9 digits.');
+            setBookingError('incorrect phone number format');
             return;
         }
 
@@ -233,8 +243,8 @@ const ServiceDetail = () => {
 
             setCurrentStep(3);
         } catch (error) {
-            console.error('Booking submission failed:', error);
-            setBookingError('There was a problem submitting your booking. Please try again.');
+            // console.error('Booking submission failed:', error);
+            setBookingError('booking failed message');
         } finally {
             setIsSubmitting(false);
         }
@@ -275,15 +285,15 @@ const ServiceDetail = () => {
     return (
         <div className=''>
             <Navbar />
-            <div className='text-black md:max-w-7xl mx-auto min-h-screen px-4 py-8 md:px-10'>
+            <div className='text-black md:max-w-4/5 mx-auto min-h-screen px-4 py-8 md:px-10'>
                 <Link href='/#services' className='text-black/50 text-lg mb-4 flex items-center gap-3'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-left"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
-                    Back to Services
+                    {(t("Back to Services"))}
                 </Link>
 
                 <div className='flex flex-col gap-3 mb-10 mt-5'>
-                    <h3 className='font-heading first-letter:uppercase text-4xl md:text-5xl'>{categoryTitle} Makeup Packages</h3>
-                    <p className='text-gray-700'>Choose the perfect packages for your special day</p>
+                    <h3 className='font-heading first-letter:uppercase text-4xl md:text-5xl'>{t(categoryTitle)} {t("makeupPackage")}</h3>
+                    <p className='text-gray-700'>{t("subHeading")}</p>
                 </div>
 
                 <Stepper currentStep={currentStep} />
@@ -317,14 +327,14 @@ const ServiceDetail = () => {
                                             {isSelected && (
                                                 <span className='inline-flex items-center gap-1 rounded-full bg-[#C9A34E] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-black'>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check"><path d="M20 6 9 17l-5-5" /></svg>
-                                                    Selected
+                                                    {(t("selected"))}
                                                 </span>
                                             )}
                                         </div>
 
                                         {pkg.isPopular && (
                                             <div className='absolute right-4 top-4 z-20'>
-                                                <span className='rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A5B11]'>Popular</span>
+                                                <span className='rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A5B11]'>{t("popular")}</span>
                                             </div>
                                         )}
 
@@ -345,28 +355,28 @@ const ServiceDetail = () => {
 
                                         <div className='flex flex-1 flex-col gap-4 p-5'>
                                             <div className='flex items-start justify-between gap-3'>
-                                                <h3 className='text-xl font-bold leading-tight first-letter:uppercase'>{pkg.name}</h3>
+                                                <h3 className='text-xl font-bold leading-tight first-letter:uppercase'>{t(pkg.name)}</h3>
                                                 <span className='rounded-full border border-[#E8E1D9] bg-[#F7F4F1] px-2.5 py-1 text-sm font-semibold text-black'>
-                                                    {pkg.price.toLocaleString()} ETB
+                                                    {pkg.price.toLocaleString()} {t("ETB")}
                                                 </span>
                                             </div>
 
-                                            <p className='text-sm leading-6 text-gray-700'>{pkg.description}</p>
+                                            {/* <p className='text-sm leading-6 text-gray-700'>{pkg.description}</p> */}
 
                                             <div>
-                                                <p className='mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A8178]'>Includes</p>
+                                                <p className='mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A8178]'>{t("includes")}</p>
                                                 <ul className='space-y-2 text-sm text-gray-700'>
                                                     {pkg.includes.map((item, index) => (
                                                         <li key={`${pkg.id}-include-${index}`} className='flex items-center gap-2'>
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check text-[#7A5B11]"><path d="M20 6 9 17l-5-5" /></svg>
-                                                            <span>{item}</span>
+                                                            <span>{t(item)}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
                                             </div>
 
                                             <div className='mt-auto flex items-center justify-between border-t border-[#EEE7E1] pt-4'>
-                                                <span className='text-sm text-gray-600'>Duration</span>
+                                                <span className='text-sm text-gray-600'>{t("duration")}</span>
                                                 <span className='text-sm font-semibold text-black'>{pkg.duration}</span>
                                             </div>
                                         </div>
@@ -382,7 +392,7 @@ const ServiceDetail = () => {
                                 className='inline-flex items-center gap-3 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#C9A34E] hover:text-black disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 md:px-8'
                                 onClick={handleContinueToDetails}
                             >
-                                <span>{selectedPackage ? `Continue with ${selectedPackage.name}` : 'Select a package'}</span>
+                                {locale === "en" ? (<span>{selectedPackage ? `${t("Continue with")} ${t(selectedPackage.name)}` : 'Select a package'}</span>) : (<span>{selectedPackage ? `በ${t(selectedPackage.name)} ${t("Continue with")} ` : 'Select a package'}</span>)}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14" /><path d="m13 5 7 7-7 7" /></svg>
                             </button>
                         </div>
@@ -405,22 +415,22 @@ const ServiceDetail = () => {
                         </div> */}
 
                         <div className='mb-8'>
-                            <h3 className='font-heading text-2xl'>Personal Information</h3>
-                            <p className='text-sm text-black/50'>So we know who we are preparing for</p>
+                            <h3 className='font-heading text-2xl'>{t("Personal Information")}</h3>
+                            <p className='text-sm text-black/50'>{t("So we know who we are preparing for")}</p>
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Full Name</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Full Name")}</label>
                                     <input
                                         type='text'
                                         value={bookingForm.fullname}
                                         onChange={(event) => updateFormField('fullname', event.target.value)}
-                                        placeholder='Enter your full name'
+                                        placeholder={t("Enter your full name")}
                                         className='w-full border-b border-gray-400 bg-transparent pb-2 text-black outline-none placeholder:text-gray-500 focus:border-black'
                                     />
                                 </div>
 
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Phone Number</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Phone Number")}</label>
                                     <div className='flex items-center gap-2 border-b border-gray-400 pb-2'>
                                         <span className='text-sm text-gray-600'>+251</span>
                                         <input
@@ -434,7 +444,7 @@ const ServiceDetail = () => {
                                 </div>
 
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Email (optional)</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Email (optional)")}</label>
                                     <input
                                         type='email'
                                         value={bookingForm.email}
@@ -446,13 +456,13 @@ const ServiceDetail = () => {
                             </div>
                         </div>
                         <div className='mb-8 mt-5'>
-                            <h3 className='font-heading text-2xl'>Appointment</h3>
-                            <p className='text-sm text-black/50'>When you would like to schedule your appointment</p>
+                            <h3 className='font-heading text-2xl'>{t("Appointment")}</h3>
+                            <p className='text-sm text-black/50'>{t("When you would like to schedule your appointment")}</p>
 
                             <div className='grid gap-6 md:grid-cols-2 mt-5'>
 
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Preferred Date</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Preferred Date")}</label>
                                     <input
                                         type='date'
                                         value={bookingForm.date}
@@ -462,7 +472,7 @@ const ServiceDetail = () => {
                                 </div>
 
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Preferred Time</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Preferred Time")}</label>
                                     <input
                                         type='time'
                                         value={bookingForm.time}
@@ -472,7 +482,7 @@ const ServiceDetail = () => {
                                 </div>
 
                                 <div>
-                                    <label className='mb-2 block text-sm font-semibold text-black'>Number of People</label>
+                                    <label className='mb-2 block text-sm font-semibold text-black'>{t("Number of People")}</label>
                                     <div className='flex items-center gap-3'>
                                         <button
                                             type='button'
@@ -501,7 +511,7 @@ const ServiceDetail = () => {
 
                         {bookingError && (
                             <div className='mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700'>
-                                {bookingError}
+                                {t(bookingError)}
                             </div>
                         )}
 
@@ -511,7 +521,7 @@ const ServiceDetail = () => {
                                 onClick={() => setCurrentStep(1)}
                                 className='rounded-full border border-black px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-black hover:text-white'
                             >
-                                Back to Packages
+                                {t("Back to Packages")}
                             </button>
 
                             <button
@@ -520,7 +530,7 @@ const ServiceDetail = () => {
                                 disabled={isSubmitting}
                                 className='rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#C9A34E] hover:text-black disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500'
                             >
-                                {isSubmitting ? 'Submitting...' : 'Review & Submit'}
+                                {t("Review & Submit")}
                             </button>
                         </div>
                     </div>
@@ -544,38 +554,38 @@ const ServiceDetail = () => {
                                 <div className={`flex h-12 w-12 items-center justify-center rounded-full border text-sm font-semibold border-[#6B7A5E] bg-[#6B7A5E] text-white mx-auto `}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#ffffff" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg> 
                                 </div>
-                                <p className='font-heading text-3xl'>Your request has been sent</p>
+                                <p className='font-heading text-3xl'>{t("Your request has been sent")}</p>
                             </div>
-                            <p>We have recieved your booking request and will confirm your appointment shortly.  We will reach out to you to finalize the details.</p>
+                            <p>{t("requestSuccess")}</p>
                         </div>
 
                         <div className='mt-10'>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] pb-4'>
-                                <h3>Full Name </h3>
+                                <h3>{t("Full Name")}</h3>
                                 <p className='first-letter:uppercase'>{submittedBooking.fullname}</p>
                             </div>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
-                                <h3>Phone </h3>
+                                <h3>{t("Phone Number")}</h3>
                                 <p className='first-letter:uppercase'>{submittedBooking.phone}</p>
                             </div>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
-                                <h3>Package </h3>
+                                <h3>{t("Package")}</h3>
                                 <p className='first-letter:uppercase'>{submittedBooking.packageName}</p>
                             </div>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
-                                <h3>Total Price </h3>
-                                <p className='first-letter:uppercase'>{submittedBooking.totalPrice} ETB</p>
+                                <h3>{t("TotalPrice")}</h3>
+                                <p className='first-letter:uppercase'>{submittedBooking.totalPrice} {t("ETB")}</p>
                             </div>
                         </div>
 
                         <div className='mt-6 rounded-xl border border-red-500 text-red-500 p-4'>
-                            <p className='text-lg font-semibold'>Disclaimer!</p> 
-                            <p className='mt-2 text-sm'> This booking is for availability checking only. Confirmation and payment process will be arranged directly with the makeup artist. </p>
+                            <p className='text-lg font-semibold'>{t("disclaimer")}</p> 
+                            <p className='mt-2 text-sm'> {t("disclaimerMessage")} </p>
                         </div>
  
                         <div className='mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between'>
                             <Link href='/' className='rounded-full border border-black px-6 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-black hover:text-white'>
-                                Back to Homepage
+                                {t("backToHomepage")}
                             </Link>
                             <button
                                 type='button'
@@ -587,7 +597,7 @@ const ServiceDetail = () => {
                                 }}
                                 className='rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#C9A34E] hover:text-black'
                             >
-                                Book Another Package
+                                {t("bookAnotherPackage")}
                             </button>
                         </div>
                     </div>
