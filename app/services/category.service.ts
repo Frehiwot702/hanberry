@@ -8,12 +8,17 @@ export type Category = {
   name: string;
   status: "active" | "inactive";
   order: number;
+  slug: string;
+  description: string;
+  coverImage: string;
 }
 
 export type AddCategoryRequest = {
   name: string;
   status: string;
-  order: string;
+  order: string; 
+  description?: string;
+  coverImage: string;
 }
 
 
@@ -28,7 +33,10 @@ export const fetchCategories = async (): Promise<Category[]> => {
         id: doc.id,
         name: data.name ?? "",
         status: data.status,
-        order: data.order
+        order: data.order,
+        slug: data.name.toLowerCase(),
+        description: data.description ?? "",
+        coverImage: data.coverImage ?? "" 
       };
     });
 }
@@ -37,11 +45,14 @@ export const createCategory = async (data: AddCategoryRequest) => {
   return await addDoc(collection(db, "categories"), {
     name: data.name,
     status: data.status,
-    order: Number(data.order)
+    order: Number(data.order),
+    slug: data.name.toLowerCase(),
+    description: data.description ?? "",
+    coverImage: data.coverImage
   });
 };
 
-export const updateCategory = async (id: string, data: Partial<{name: string; status?: "active" | "inactive", order: number}>) => {
+export const updateCategory = async (id: string, data: Partial<{name: string; status?: "active" | "inactive", order: number, description: string, coverImage: string}>) => {
   return await updateDoc(
     doc(db, "categories", id),
     data
@@ -65,10 +76,7 @@ export const deleteCategoryCascade = async ( categoryId: string ) => {
       );
 
     // FIND RELATED PACKAGES
-    const packageQuery =
-      query( collection( db, "packages" ),
-      where( "categoryId", "==", categoryId )
-    );
+    const packageQuery = query( collection( db, "packages" ), where( "categoryId", "==", categoryId ));
 
     const packageSnap = await getDocs( packageQuery );
 
@@ -105,7 +113,10 @@ export const subscribeCategories = (
             id: doc.id,
             name: data.name ?? "",
             status: data.status,
-            order: data.order
+            order: data.order,
+            slug: data.slug,
+            description: data.description,
+            coverImage: data.coverImage
           };
         });
 

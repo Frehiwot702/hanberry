@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Poppins } from "next/font/google";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminTabs } from "@/components/admin/AdminTabs";
 import { AdminDashboardPanel } from "@/components/admin/AdminDashboardPanel";
@@ -15,7 +14,7 @@ import {
 import AdminWorksPanel from "@/components/admin/AdminWorksPanel";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { AddPackageRequest, BookingCategoryGroup, createPackage, fetchPackages, groupPackagesByCategory, Package, removePackage, subscribePackages, updatePackage } from "../services/package.service";
+import { AddPackageRequest, createPackage, fetchPackages, groupPackagesByCategory, Package, removePackage, subscribePackages, updatePackage } from "../services/package.service";
 import { Category, createCategory, deleteCategoryCascade, fetchCategories, removeCategory, subscribeCategories, updateCategory } from "../services/category.service";
 import { Booking, fetchBookings, subscribeBookingRequests, updateBooking } from "../services/booking.servce";
 import { AdminHistoryPanel } from "@/components/admin/AdminHistoryPanel";
@@ -25,12 +24,6 @@ import AdminGalleryPanel from "@/components/admin/AdminGalleryPanel";
 
 
 const tabs: TabKey[] = ["Dashboard", "Packages", "Bookings", "Works", "Gallery", "History"];
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
 export default function AdminPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("Dashboard");
@@ -133,7 +126,8 @@ export default function AdminPage() {
         }
       );
     return () => unsubscribe(); 
-  }, [bookingRequests]);
+  }, []); 
+   
 
   // for updating works images data when changed
   useEffect(() => { 
@@ -276,7 +270,7 @@ export default function AdminPage() {
 
     try {
       setLoading(true);
-      await createCategory({ name: name, status: "active", order: order });
+      await createCategory({ name: name, status: "active", order: order, coverImage: "" });
       setNewCategory("");
       setOrder("");
       setLoading(false);
@@ -425,7 +419,7 @@ export default function AdminPage() {
   console.log({categories})
 
   return (
-    <main className={`${poppins.className} min-h-screen bg-[#f4f4f4] text-black`}>
+    <main className="font-body min-h-screen bg-[#f4f4f4] text-black">
       <AdminHeader onLogout={logout} />
 
       <section className="w-full px-2 md:px-8 pt-9 pb-12">

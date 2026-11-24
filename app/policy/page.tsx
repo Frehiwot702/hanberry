@@ -14,7 +14,7 @@ const Policy = () => {
             />
         </div>
         <div className='text-md flex flex-col mx-auto p-5 md:p-16  my-auto'>
-            <h3 style={{fontFamily: 'salvager'}} className="text-4xl md:text-6xl py-5">Booking Policy</h3>
+            <h3 className="font-brand text-4xl md:text-6xl py-5">Booking Policy</h3>
             <ul className='space-y-3 mt-5'>
                 <li>• <b>Appointments Only:</b> All services are by appointment to ensure each client receives a personalized premiumexperience.</li>
                 <li>• <b>Punctuality:</b> Please arrive on time for your appointment. Late arrivals may result in a shortened service or cancellation, as we carefully honor each client’s scheduled time.</li>

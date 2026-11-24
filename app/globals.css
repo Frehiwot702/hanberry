@@ -1,34 +1,72 @@
+
 @import "tailwindcss";
 
+/* =========================
+   GENERAL WEBSITE COLORS
+========================= */
+
 :root {
-  --background: #ffffff;
+  --background: #FAF6F0;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* English font setting */
+
+html {
+  --font-brand-active: var(--font-salvager);
+  --font-heading-active: var(--font-cormorant);
+  --font-body-active: var(--font-worksans);
+  --font-form-active: var(--font-worksans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Amharic font setting */
+html[lang="am"] {
+  --font-brand-active: var(--font-noto-serif);
+  --font-heading-active: var(--font-noto-serif);
+  --font-body-active: var(--font-noto-sans);
+  --font-form-active: var(--font-noto-sans);
 }
+
+/* =========================
+   TAILWIND FONT UTILITIES
+========================= */
+
+@theme inline {
+  --font-brand: var(--font-brand-active);
+  --font-heading: var(--font-heading-active);
+  --font-body: var(--font-body-active);
+  --font-form: var(--font-form-active);
+}
+
+/* =========================
+   DEFAULT BODY STYLING
+========================= */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: var(--font-body-active), sans-serif;
 }
 
-@font-face {
-  font-family: 'salvager';
-  src: url('/fonts/SALVAGER.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  /* Add additional font weights/styles if you have more files */
+/* Form controls */
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-form-active), sans-serif;
 }
+
+/* Amharic readability */
+html[lang="am"] body {
+  line-height: 1.7;
+}
+
+html[lang="am"] .font-heading {
+  line-height: 1.5;
+}
+
+html[lang="am"] .font-body,
+html[lang="am"] .font-form {
+  letter-spacing: normal;
+}
+

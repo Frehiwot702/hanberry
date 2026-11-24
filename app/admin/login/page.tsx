@@ -2,23 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Inter, Poltawski_Nowy } from "next/font/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const poltawskiNowy = Poltawski_Nowy({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 /** Intrinsic size for `next/image`; layout scales with card width */
 const IMAGE_WIDTH = 520;
@@ -75,7 +62,7 @@ export default function AdminLoginPage() {
 
   return (
     <main
-      className={`${inter.className} min-h-screen bg-white text-neutral-900 flex items-center justify-center py-10 sm:px-8 md:px-12`}
+      className="font-body min-h-screen bg-white text-neutral-900 flex items-center justify-center py-10 sm:px-8 md:px-12"
     >
       <div className="w-full grid md:grid-cols-2 lg:flex-row items-center justify-center gap-14 lg:gap-18 xl:gap-24">
         {/* Left: informational card */}
@@ -98,7 +85,7 @@ export default function AdminLoginPage() {
               />
             </div>
             <div className="pt-7 px-1 pb-1 text-center">
-              <h2 className="text-4xl text-black tracking-tight">
+              <h2 className="font-brand text-4xl text-black tracking-tight">
                 Hanberry Beauty
               </h2>
               <p className="mt-3 text-sm leading-[1.65] text-black md:w-2/3 mx-auto">
@@ -114,7 +101,7 @@ export default function AdminLoginPage() {
 
         {/* Right: login form */}
         <div className="w-full lg:flex-1 flex flex-col justify-center min-w-0 px-5">
-          <div className={`${poltawskiNowy.className} text-black`}>
+          <div className="font-heading text-black">
             <h1 className="text-[1.75rem] sm:text-[1.95rem] lg:text-[2.125rem] xl:text-5xl leading-[1.2] font-medium tracking-[0.04em] text-balance">
               Enter your credentials to continue
             </h1>

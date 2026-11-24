@@ -1,68 +1,89 @@
 // import Image from 'next/image'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server';
 // import React from 'react'
 
-const Footer = () => {
+const Footer = async () => {
+  const t = await getTranslations('Footer');
+
   return (
-    <div className='bg-black text-white h-full relative w-full'>
+    <div className='bg-[#231814] text-white h-full relative w-full font-body'>
         <div className='grid lg:grid-cols-6 md:gap-5 px-10 py-20'>
             <div className='col-span-2 relative p-10 min-h-96 min-w-72 mx-auto md:h-full'>
                 <Image
                     src='/women.png'
-                    alt='Women with a crown illustration'
+                    alt={t("imageAlt")}
                     fill
                     className='h-full w-full object-center object-contain mx-auto my-auto '
                 />
             </div>
             <div className='grid md:grid-cols-3 gap-10 col-span-4'>
                 <div className='space-y-3'>
-                    <h3 style={{fontFamily: 'salvager'}} className='text-3xl md:text-4xl font-semibold'>Stay Connected to the future of Hanberry Beauty</h3>
-                    <p className='text-sm text-white/70'>hami0935712362@gmail.com</p>
+                    <h3 className='text-3xl md:text-5xl font-heading'> {t("headline")} </h3>
+                    <p className='text-sm md:text-md text-white/70'>hami0935712362@gmail.com</p>
                 </div>
                 <div className='md:mx-auto space-y-3'>
-                    <h3 style={{fontFamily: 'salvager'}} className='text-xl font-bold'>Discover</h3>
-                    <ul className='text-sm py-2 text-white/70 space-y-1 group group-hover:text-[#D8A48F] hover:cursor-pointer'>
-                        <li className='hover:text-[#E7C9B6]'>Home</li>
-                        <li className='hover:text-[#E7C9B6]'>About</li>
-                        <li className='hover:text-[#E7C9B6]'>Services</li>
-                        <li className='hover:text-[#E7C9B6]'>Gallery</li>
-                        <li className='hover:text-[#E7C9B6]'>Contact</li>
+                    <h3 className='font-brand text-xl md:text-3xl'>{t("discover")}</h3>
+                    <ul className='text-sm md:text-lg py-2 text-white/70 space-y-1 group group-hover:text-[#D8A48F] hover:cursor-pointer'>
+                        <li className='hover:text-[#E7C9B6]'>{t("home")}</li>
+                        <li className='hover:text-[#E7C9B6]'>{t("about")}</li>
+                        <li className='hover:text-[#E7C9B6]'>{t("services")}</li>
+                        <li className='hover:text-[#E7C9B6]'>{t("gallery")}</li>
+                        <li className='hover:text-[#E7C9B6]'>{t("contact")}</li>
                     </ul>
                 </div>
                 <div className='md:mx-auto space-y-3'>
-                    <h3 style={{fontFamily: 'salvager'}} className='text-xl font-bold'>Contact</h3>
-                    <ul className='text-sm py-2 text-white/70 space-y-1 group group-hover:text-[#D8A48F] hover:cursor-pointer'>
+                    <h3 className='font-brand text-xl md:text-3xl'>{t("contact")}</h3>
+                    <ul className='text-sm md:text-lg py-2 text-white/70 space-y-1 group group-hover:text-[#D8A48F] hover:cursor-pointer'>
                         <li className='hover:text-[#E7C9B6]'> +251 935 71 23 62 </li>
                         <li className='hover:text-[#E7C9B6]'> +251 914 67 16 13 </li>
-                        <li className='hover:text-[#E7C9B6]'> Addis Ababa, Ethiopia </li>
+                        <li className='hover:text-[#E7C9B6]'> {t("addisAbaba")} </li>
                     </ul>
                 </div>
                 <div className='w-full md:grid items-center'>
                     <div className='space-y-8'>
-                        <div className='w-full md:w-1/2 space-y-3'>
-                            <h3 className='text-xl font-semibold text-[#D8A48F]'>Hamneal Nebiyu - Artist</h3>
-                            <p className='text-sm text-white/80 font-light'>Professional Makeup Artist | Bridal & Event Specialist Enhancing natural beauty with passion, precision, and care.</p>
-                        </div>
+                        {/* <div className='w-full md:w-2/3 space-y-3'>
+                            <h3 className='text-2xl text-[#D8A48F]'>Hamneal Nebiyu - Artist</h3>
+                            <p className='text-sm md:text-lg text-white/80 font-light'>Professional Makeup Artist | Bridal & Event Specialist Enhancing natural beauty with passion, precision, and care.</p>
+                        </div> */}
                         <div className=''>
-                            <h3 style={{fontFamily: 'salvager'}} className='text-xl font-bold'>Socials</h3>
+                            <h3 className='font-brand text-xl md:text-3xl'>{t("socials")}</h3>
                             <div>
                                 <ul className='flex space-x-3 py-2 text-sm text-white/80'>
                                     <li className='hover:text-[#E7C9B6]'> 
-                                        <Link href='https://www.instagram.com/hamneal_nebiyu?igsh=NHU3dGF2Z256bjJ6&utm_source=qr'>Instagram </Link>
+                                        <Link href='https://www.instagram.com/hamneal_nebiyu?igsh=NHU3dGF2Z256bjJ6&utm_source=qr'>
+                                            {/* {t("instagram")} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" /><path d="M8.5 12a3.5 3.5 0 1 0 7 0a3.5 3.5 0 0 0 -7 0" /><path d="M17 7v.01" /></svg> 
+                                        </Link>
                                     </li>
                                     <li>|</li>
                                     <li className='hover:text-[#E7C9B6]'> 
-                                        <Link href='https://www.tiktok.com/@hamnealnebiyu?_r=1'>TikTok</Link></li>    
+                                        <Link href='https://www.tiktok.com/@hamnealnebiyu?_r=1'>
+                                            {/* {t("tiktok")} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-tiktok"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917" /></svg>
+                                        </Link>
+                                    </li>    
                                     <li>|</li>
                                     <li className='hover:text-[#E7C9B6]'>
-                                        <Link href='#'>Facebook</Link></li>
+                                        <Link href='#'>
+                                            {/* {t('facebook')} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <div className='border-t-2 border-white/20 pt-5 mb-0'>
-                            <h3 className='text-xl text-white/50 font-bold'>BEAUTY</h3>
-                            <h3 className='text-[3em] md:text-[5em] xl:text-[8.5em] font-bold'>HANBERRY</h3>
+                            {/* <h3 className='text-[3em] md:text-[5em] xl:text-[8.5em] text-[#AD8A55] inline'>HANBERRY</h3> */}
+                            <Image
+                                src="/images/HanBerry BEAUTY.png"
+                                alt="HanBerry Beauty"
+                                width={230}
+                                height={230}
+                                className="object-cover mb-4"
+                            />
+                            <p className='text-sm md:text-md text-white/80 font-light'>{t('description')}</p>
                         </div>
                     </div>
                 </div>
@@ -71,8 +92,8 @@ const Footer = () => {
         </div>
             
         <div className='bottom-0 border-t-2 border-white/20 px-5 md:px-0'>
-            <h3 className='text-sm font-light text-center py-3 text-white/90'>Made with 💖 by 
-                <Link className='text-[#bda478ff]' href='https://t.me/fruittedi'> B&F</Link> | © 2025 HanBerry Beauty — All Rights Reserved.</h3>
+            {/* Made with 💖 by <Link className='text-[#bda478ff]' href='https://t.me/fruittedi'> B&F © 2025 </Link> | */}
+            <h3 className='text-sm font-light text-center py-3 text-white/90'>{t('allRightsReserved')}</h3>
         </div>
     </div>
   )

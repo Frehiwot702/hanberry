@@ -25,7 +25,7 @@ const AdminGalleryPanel = ({gallery, categories, loading} : {gallery: Gallery[];
     const [imageHeight, setImageHeight] = useState('');
 
     const [addLoading, setAddLoading] = useState(false);
-    const [deteleLoading, setDeleteLoading] = useState(false);
+    // const [deteleLoading, setDeleteLoading] = useState(false);
 
     const [error, setError] = useState<string | null>(null);
 
