@@ -52,14 +52,25 @@ const Footer = async () => {
                             <div>
                                 <ul className='flex space-x-3 py-2 text-sm text-white/80'>
                                     <li className='hover:text-[#E7C9B6]'> 
-                                        <Link href='https://www.instagram.com/hamneal_nebiyu?igsh=NHU3dGF2Z256bjJ6&utm_source=qr'>{t("instagram")} </Link>
+                                        <Link href='https://www.instagram.com/hamneal_nebiyu?igsh=NHU3dGF2Z256bjJ6&utm_source=qr'>
+                                            {/* {t("instagram")} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" /><path d="M8.5 12a3.5 3.5 0 1 0 7 0a3.5 3.5 0 0 0 -7 0" /><path d="M17 7v.01" /></svg> 
+                                        </Link>
                                     </li>
                                     <li>|</li>
                                     <li className='hover:text-[#E7C9B6]'> 
-                                        <Link href='https://www.tiktok.com/@hamnealnebiyu?_r=1'>{t("tiktok")}</Link></li>    
+                                        <Link href='https://www.tiktok.com/@hamnealnebiyu?_r=1'>
+                                            {/* {t("tiktok")} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-tiktok"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917" /></svg>
+                                        </Link>
+                                    </li>    
                                     <li>|</li>
                                     <li className='hover:text-[#E7C9B6]'>
-                                        <Link href='#'>{t('facebook')}</Link></li>
+                                        <Link href='#'>
+                                            {/* {t('facebook')} */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

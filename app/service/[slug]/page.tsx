@@ -570,7 +570,7 @@ const ServiceDetail = () => {
                             </div>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
                                 <h3>{t("Package")}</h3>
-                                <p className='first-letter:uppercase'>{submittedBooking.packageName}</p>
+                                <p className='first-letter:uppercase'>{t(submittedBooking.packageName)}</p>
                             </div>
                             <div className='flex items-center justify-between gap-3 border-b border-[#E4E0DB] py-4'>
                                 <h3>{t("TotalPrice")}</h3>
