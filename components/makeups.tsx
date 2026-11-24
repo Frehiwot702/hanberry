@@ -47,7 +47,7 @@ export default function MakeupGallery() {
   const g = useTranslations();
 
   return (
-    <div className="w-full py-6 md:py-8 lg:py-24 font-body">
+    <div className="w-full md:max-w-4/5 mx-auto py-6 md:py-8 lg:py-24 font-body">
       <div className="px-4 md:px-16">
         {/* Top Divider Line */}
         {/* <div className="h-px bg-[#F8E7E3] mb-6 md:mb-8"></div> */}

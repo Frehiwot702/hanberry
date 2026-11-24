@@ -37,7 +37,7 @@ const Services = () => {
     }
     
   return (
-    <div id='services' className='relative text-black w-full py-16 px-5 md:px-16 space-y-4 font-body'>
+    <div id='booking' className='relative text-black w-full md:max-w-4/5 mx-auto py-16 px-5 md:px-0 space-y-4 font-body'>
         <h3 className='text-[#AD8A55] uppercase'>{t("bookYourAppointment")}</h3>
         <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -50,7 +50,7 @@ const Services = () => {
         >{t("chooseAService")}</motion.h1>
         <p className="text-lg text-black leading-relaxed max-w-2xl">{t("chooseServiceDescription")}</p>
 
-        <div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-5'>
+        <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
             {grouped.sort((a, b) => a.order - b.order).map((category) => (
                 <div key={category.id} className='relative w-full'>
                     <div className='relative w-full h-[600px]'>
@@ -66,8 +66,8 @@ const Services = () => {
                     <div className='text-white absolute top-24 left-5 grid h-full'>
                         <div className='grid grid-cols-1 items-end gap-2 row-span-2 h-full justify-end'>
                             <div className='flex flex-col bottom-5 gap-2'>
-                                <h3 className='text-4xl md:text-6xl font-heading'>{t(category.name)} {g("makeup")}</h3>
-                                <p className='text-sm font-light text-white/80'>{t(category.description)}</p>
+                                <h3 className='text-3xl lg:text-5xl font-brand'>{t(category.name)} {g("makeup")}</h3>
+                                <p className='text-md font-light text-white/80'>{t(category.description)}</p>
                             </div>
                         </div>
                         {/* <div className='flex flex-col justify-end gap-2 row-span-1 h-[100px]'>

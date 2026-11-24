@@ -43,7 +43,7 @@ const Contact = () => {
       }
 
   return (
-    <div id='contact' className='relative w-full h-full grid xl:grid-cols-2 gap-5 text-black px-5 md:px-16 font-body'>
+    <div id='contact' className='relative w-full md:max-w-4/5 mx-auto h-full grid xl:grid-cols-2 gap-5 text-black px-5 md:px-16 font-body'>
         <div className='my-auto py-16 relative pb-24'>
             <h3 className='text-4xl md:text-6xl pb-4 font-heading'>{t("headline")}</h3>
             <p className='text-lg text-[#4C3C32]'>{t("description")}</p>
@@ -83,11 +83,11 @@ const Contact = () => {
         </div>
         <div className='hidden lg:flex items-center justify-center bg-transparent '>
             <Image
-              className='h-full w-full object-cover mx-auto bg-transparent'
+              className='h-full w-full object-contain object-bottom mx-auto bg-transparent'
               src='/images/contact_women.png'
               alt='Black Woman'
-              width={600}
-              height={300}
+              width={500}
+              height={200}
               // fill
             />
         </div>

@@ -15,15 +15,15 @@ type stat = {
   side: string;
 }
 
-const imageRotate = {
-  hidden: { opacity: 0, rotate: -8, scale: 0.9 },
-  visible: { 
-    opacity: 1, 
-    rotate: -4, 
-    scale: 1,
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const }
-  },
-} as const;
+// const imageRotate = {
+//   hidden: { opacity: 0, rotate: -8, scale: 0.9 },
+//   visible: { 
+//     opacity: 1, 
+//     rotate: -4, 
+//     scale: 1,
+//     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const }
+//   },
+// } as const;
 
 const numberScale = {
   hidden: { opacity: 0, scale: 0.5, y: 20 },
@@ -68,7 +68,7 @@ export default function AboutHamneal() {
     <div id='about' className="w-full font-body">
       {/* Top Section - Light Brown Background */}
       <div className="bg-[#231814] text-white py-8 md:py-12 lg:py-16 min-h-screen h-full">
-        <div className="px-4 sm:px-8 lg:px-16">
+        <div className="px-5 md:px-0 w-full md:max-w-4/5 mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-24 lg:gap-12 items-center h-full">
             {/* Left Side - Image */}
             <motion.div
@@ -94,7 +94,7 @@ export default function AboutHamneal() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeInUp}
-              className="flex flex-col gap-6 md:px-10"
+              className="flex flex-col gap-6 md:px-5"
             >
               <h2 className="text-lg tracking-tight text-[#AD8A55] uppercase">
                 {t("theArtist")}
@@ -115,7 +115,7 @@ export default function AboutHamneal() {
               {/* Bottom Section - White Background with Statistics */}
               <div className="border-t-2 border-[#E3D5C3]/30 pt-8 mt-2">
                 <div className="mx-auto">
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
                     {stats.map((stat, index) => (
                       <motion.div
                         key={index}
@@ -131,7 +131,7 @@ export default function AboutHamneal() {
                           viewport={{ once: true, amount: 0.3 }}
                           variants={numberScale}
                           transition={{ delay: index * 0.1 }}
-                          className="text-4xl md:text-5xl lg:text-6xl mb-2 font-heading"
+                          className="text-3xl md:text-3xl lg:text-4xl mb-2 font-heading"
                         >
                           <CountUp to={stat.value} from={0} side={stat.side}/>
                         </motion.div>

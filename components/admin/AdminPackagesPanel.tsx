@@ -132,12 +132,12 @@ export function AdminPackagesPanel({
     setModalType("delete-package");
   }
 
-  function closeActionModal() {
-    setModalType(null);
-    setActiveCategory(null);
-    setActivePackage(null);
-    setEditNameDraft("");
-  }
+  // function closeActionModal() {
+  //   setModalType(null);
+  //   setActiveCategory(null);
+  //   setActivePackage(null);
+  //   setEditNameDraft("");
+  // }
 
   async function submitNewPackage() {
     if (!selectedCategoryId) return;
@@ -160,43 +160,43 @@ export function AdminPackagesPanel({
   }
   console.log({activeCategory})
 
-  async function submitActionModal() {
-    if (modalType === "edit-category" && activeCategory) {
-      const updates = {name: editNameDraft, status: editStatus, order: editOrder}
-      await onEditCategory(activeCategory.id, updates);
-      closeActionModal();
-      return;
-    }
-    if (modalType === "delete-category" && activeCategory) {
-      await onDeleteCategory(activeCategory.id);
-      closeActionModal();
-      return;
-    }
-    if (modalType === "edit-package" && activePackage) {
-      const updates = {
-        name: packageName,
-        description: packageDescription,
-        price: Number(packagePrice),
-        duration: packageDuration,
-        includes,
-        optional_notes: packageOptionalNotes,
-        categoryId: selectedCategoryId,
-        category: {
-          name: selectedCategory?.name ?? "",
-          status: selectedCategory ? selectedCategory.status : "active"
-        },
-        status: packageStatus
-      }
-      await onEditPackage(activePackage.id, updates);
-      closeActionModal();
-      return;
-    }
-    if (modalType === "delete-package" && activePackage) {
-      await onDeletePackage(activePackage.id);
-      closeActionModal();
-      return;
-    }
-  }
+  // async function submitActionModal() {
+  //   if (modalType === "edit-category" && activeCategory) {
+  //     const updates = {name: editNameDraft, status: editStatus, order: editOrder}
+  //     await onEditCategory(activeCategory.id, updates);
+  //     closeActionModal();
+  //     return;
+  //   }
+  //   if (modalType === "delete-category" && activeCategory) {
+  //     await onDeleteCategory(activeCategory.id);
+  //     closeActionModal();
+  //     return;
+  //   }
+  //   if (modalType === "edit-package" && activePackage) {
+  //     const updates = {
+  //       name: packageName,
+  //       description: packageDescription,
+  //       price: Number(packagePrice),
+  //       duration: packageDuration,
+  //       includes,
+  //       optional_notes: packageOptionalNotes,
+  //       categoryId: selectedCategoryId,
+  //       category: {
+  //         name: selectedCategory?.name ?? "",
+  //         status: selectedCategory ? selectedCategory.status : "active"
+  //       },
+  //       status: packageStatus
+  //     }
+  //     await onEditPackage(activePackage.id, updates);
+  //     closeActionModal();
+  //     return;
+  //   }
+  //   if (modalType === "delete-package" && activePackage) {
+  //     await onDeletePackage(activePackage.id);
+  //     closeActionModal();
+  //     return;
+  //   }
+  // }
 
   return (
     <section className="mt-12 lg:mx-28">

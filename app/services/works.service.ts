@@ -1,4 +1,4 @@
-import { doc, addDoc, collection, getDocs, deleteDoc, updateDoc, onSnapshot, query, where, writeBatch} from "firebase/firestore";
+import { doc, addDoc, collection, getDocs, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const workRef = collection(db, "works");

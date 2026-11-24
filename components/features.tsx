@@ -59,7 +59,7 @@ export default async function HanberryFeaturesPage() {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden text-black md:py-16 px-5 md:px-16 font-body my-auto"
+      className="min-h-screen relative overflow-hidden text-black md:py-16 px-5 md:px-0 w-full md:max-w-4/5 mx-auto font-body my-auto"
       // style={{ backgroundImage: "url('/images/b1.png')" }}
     >
       <div className='py-16'>

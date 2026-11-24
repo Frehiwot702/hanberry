@@ -14,7 +14,7 @@ import {
 import AdminWorksPanel from "@/components/admin/AdminWorksPanel";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { AddPackageRequest, BookingCategoryGroup, createPackage, fetchPackages, groupPackagesByCategory, Package, removePackage, subscribePackages, updatePackage } from "../services/package.service";
+import { AddPackageRequest, createPackage, fetchPackages, groupPackagesByCategory, Package, removePackage, subscribePackages, updatePackage } from "../services/package.service";
 import { Category, createCategory, deleteCategoryCascade, fetchCategories, removeCategory, subscribeCategories, updateCategory } from "../services/category.service";
 import { Booking, fetchBookings, subscribeBookingRequests, updateBooking } from "../services/booking.servce";
 import { AdminHistoryPanel } from "@/components/admin/AdminHistoryPanel";
@@ -270,7 +270,7 @@ export default function AdminPage() {
 
     try {
       setLoading(true);
-      await createCategory({ name: name, status: "active", order: order });
+      await createCategory({ name: name, status: "active", order: order, coverImage: "" });
       setNewCategory("");
       setOrder("");
       setLoading(false);

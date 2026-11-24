@@ -7,7 +7,6 @@ import { createBooking, AddBookingRequest } from '@/app/services/booking.servce'
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useTranslations, useLocale } from "next-intl"
-import { ta } from 'zod/v4/locales';
 
 type BookingFormState = {
     fullname: string;
@@ -83,12 +82,12 @@ const Stepper = ({ currentStep }: { currentStep: number }) => {
     );
 };
 
-const formatDate = (value: string) => {
-    if (!value) return 'Not provided';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return value;
-    return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-};
+// const formatDate = (value: string) => {
+//     if (!value) return 'Not provided';
+//     const date = new Date(value);
+//     if (Number.isNaN(date.getTime())) return value;
+//     return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+// };
 
 const ServiceDetail = () => {
     const { slug } = useParams();

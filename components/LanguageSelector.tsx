@@ -8,6 +8,11 @@ interface LanguageSelectorProps {
   variant?: 'desktop' | 'mobile';
 }
 
+// outside the component, module scope
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+}
+
 export default function LanguageSelector({ variant = 'desktop' }: LanguageSelectorProps) {
   const currentLocale = useLocale();
   const router = useRouter();
@@ -27,11 +32,8 @@ export default function LanguageSelector({ variant = 'desktop' }: LanguageSelect
       setIsOpen(false);
       return;
     }
-
-    // Set cookie with 1 year expiration
-    document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+    setLocaleCookie(locale);   // ✅ no error
     setIsOpen(false);
-
     startTransition(() => {
       router.refresh();
     });

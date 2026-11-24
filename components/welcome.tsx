@@ -50,7 +50,7 @@ function MakeupIntro() {
   const g = useTranslations();
   return (
 
-    <div className="w-full bg-[#231814] text-white flex flex-col lg:flex-row font-body">
+    <div className="w-full md:max-w-4/5 mx-auto bg-[#FFFFFF] text-white flex flex-col lg:flex-row font-body sm:px-5 md:px-0">
       {/* Left Image bg-[#E7C9B6] */}
 
       <div className="w-full lg:w-1/2 h-screen overflow-hidden relative">
@@ -58,9 +58,9 @@ function MakeupIntro() {
       </div>
 
       {/* Right Side - Text and Image */}
-      <div className="w-full lg:w-1/2 flex flex-col">
+      <div className="w-full lg:w-1/2 flex flex-col bg-[#231814]">
         {/* Text Area */}
-        <div className="p-6 lg:p-16 flex-1 lg:max-w-4xl">
+        <div className="p-6 lg:p-16 flex-1 ">
           <p className="text-lg tracking-tight text-[#AD8A55] uppercase">
             <TypingText text={t("welcome")} delay={0.1} charDelay={0.14} />
           </p>
@@ -82,7 +82,7 @@ function MakeupIntro() {
         </div>
 
         {/* Bottom Right Image centered */}
-        <div className="w-full h-9/12 flex items-center justify-center overflow-hidden  relative">
+        <div className="w-full h-9/12 flex items-center justify-center overflow-hidden relative">
           <Image src="/images/w2.jpg" alt="Closeup eyes" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw" />
         </div>
       </div>

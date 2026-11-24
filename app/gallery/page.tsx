@@ -4,14 +4,15 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import { subscribeGallery, Gallery as GalleryT } from '../services/gallery.service';
-
+import { useTranslations } from 'next-intl';
 // type Item = { id: number; image_url: string; height: number; type: string };
 
 const Gallery = () => {
   // const [title, setTitle] = useState('Gallery');
   const [images, setImages] = useState<GalleryT[]>([]);
-  
   const [loading, setLoading] = useState(true);
+  
+  const g = useTranslations();
 
   useEffect(() => { 
       const unsubscribe = subscribeGallery((data) => { setImages(data || []); setLoading(false); });
@@ -36,7 +37,7 @@ const Gallery = () => {
           </div>
           <div className='mx-auto flex items-start justify-center py-10'>
               <motion.h1 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="font-brand text-4xl md:text-6xl mb-10 md:mb-8 text-black">
-                Gallery
+                {g("gallery")}
               </motion.h1>
           </div>
           <Masonry items={images.map((i) => ({ id: String(i.id), img: i.imageUrl, height: i.height }))} ease="power3.out" duration={0.6} stagger={0.05} animateFrom="bottom" scaleOnHover={true} hoverScale={0.95} blurToFocus={true} colorShiftOnHover={false} />
