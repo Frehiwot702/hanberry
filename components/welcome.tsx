@@ -58,7 +58,7 @@ function MakeupIntro() {
       </div>
 
       {/* Right Side - Text and Image */}
-      <div className="w-full lg:w-1/2 flex flex-col bg-[#231814]">
+      <div className="w-full lg:w-1/2 flex flex-col bg-[#231814] pb-4 md:pb-0">
         {/* Text Area */}
         <div className="p-6 lg:p-16 flex-1 ">
           <p className="text-lg tracking-tight text-[#AD8A55] uppercase">
@@ -67,13 +67,13 @@ function MakeupIntro() {
           <h1 className="text-4xl lg:text-5xl leading-tight">
             <h3 className='text-4xl lg:text-6xl leading-tight font-heading'> {t("welcomeMessage")} </h3>
           </h1>
-          <p className={`text-md lg:text-xl text-white/80 max-w-2xl font-body`}>
+          <p className={`text-sm md:text-md lg:text-xl text-white/80 max-w-2xl font-body mt-3`}>
             “{t("hanberryQuote")}” – {g("hamneal")} {g("nebiyu")}
           </p>
           <div className='mt-8'>
             <Link
                 href='/#works'
-                className='bg-[#AD8A55] w-fit text-black text-lg hover:bg-[#d6ac6d] transition-colors duration-300 py-3 px-8 rounded-full flex items-center justify-center gap-5 cursor-pointer text-center '
+                className='bg-[#AD8A55] w-fit text-black text-sm md:text-md hover:bg-[#d6ac6d] transition-colors duration-300 py-3 px-8 rounded-full flex items-center justify-center gap-5 cursor-pointer text-center '
             >
                 {t("exploreWork")}
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>

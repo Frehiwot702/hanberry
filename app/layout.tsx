@@ -12,8 +12,12 @@ import {
 } from "../lib/fonts";
 
 export const metadata: Metadata = {
-  title: "HanBerry Beauty",
-  description: "Be your own kind of beauty",
+  metadataBase: new URL('https://hanberry.minab.et'),
+  title: {
+    default: 'Professional Makeup Artist | Addis Ababa, Ethiopia',
+    template: '%s | Hamneal Nebiyu Makeup',
+  },
+  description: "Professional makeup services for bridal, editorial, and special events in Addis Ababa, Ethiopia. View portfolio and book packages.",
   keywords: [
     "makeup",
     "beauty",
@@ -36,7 +40,21 @@ export const metadata: Metadata = {
     "makeup inspiration",
     "makeup artistry",
     "makeup transformation",
-  ]
+    "addis ababa makeup",
+    "ethiopia makeup",
+  ],
+  openGraph: {
+    type: 'website',
+    locale:'en_US',
+    url: '/',
+    siteName: 'Hanberry Makeup',
+    images: [{
+      url: '/images/HanBerry BEAUTY.png',
+      width: 1200,
+      height: 630,
+      alt: 'Hanberry Makeup - Professional Makeup Artist in Addis Ababa, Ethiopia',
+    }]
+  }
 };
 
 export default async function RootLayout({

@@ -63,11 +63,11 @@ const Services = () => {
                         <div className='absolute w-full h-full bg-linear-to-b from-transparent to-black rounded-lg'/>
                     </div>
                     
-                    <div className='text-white absolute top-24 left-5 grid h-full'>
+                    <div className='text-white absolute top-16 md:top-24 left-5 grid h-full'>
                         <div className='grid grid-cols-1 items-end gap-2 row-span-2 h-full justify-end'>
                             <div className='flex flex-col bottom-5 gap-2'>
                                 <h3 className='text-3xl lg:text-5xl font-brand'>{t(category.name)} {g("makeup")}</h3>
-                                <p className='text-md font-light text-white/80'>{t(category.description)}</p>
+                                <p className='text-sm md:text-md font-light text-white/80'>{t(category.description)}</p>
                             </div>
                         </div>
                         {/* <div className='flex flex-col justify-end gap-2 row-span-1 h-[100px]'>
@@ -75,11 +75,11 @@ const Services = () => {
                         </div> */}
                         <div className='h-[100px] flex flex-col items-start gap-5'>
                             <div className='flex flex-col justify-end gap-2 row-span-1 h-[100px]'>
-                                <h3 className='mt-3'>{category.types.length} {t("packagesAvailable")}</h3>
+                                <h3 className='mt-3 text-sm md:text-md'>{category.types.length} {t("packagesAvailable")}</h3>
                             </div>
                             <Link
                                 href={`/service/${category.slug}`}  
-                                className='bg-[#E0BFB8] w-fit text-black text-md hover:bg-[#d0a090] transition-colors duration-300 py-3 px-8 rounded-full flex items-center gap-5'
+                                className='bg-[#E0BFB8] w-fit text-black text-md hover:bg-[#d0a090] transition-colors duration-300 py-3 px-8 rounded-full flex items-center gap-5 mt-5 md:mt-0'
                             >
                                 {t("explorePackages")} 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>

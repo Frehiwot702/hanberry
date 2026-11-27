@@ -42,7 +42,7 @@ function HeroSection() {
         <div className="absolute right-0 top-1/3 h-72 w-72 rounded-full bg-[#DCC7A1]/20 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-4/5 grid-cols-1 items-center gap-12 px-6 py-14 sm:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-16 lg:py-20">
+      <div className="relative mx-auto grid w-full md:max-w-4/5 grid-cols-1 items-center gap-12 px-6 py-14 sm:px-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-16 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ function HeroSection() {
             {content.tagline}
           </p>
 
-          <h1 className="font-brand text-3xl md:text-5xl leading-[1.05] text-[#231814] sm:text-6xl lg:text-7xl">
+          <h1 className="font-brand text-4xl md:text-5xl leading-[1.05] text-[#231814] sm:text-6xl lg:text-7xl">
             {content.headline}
           </h1>
 

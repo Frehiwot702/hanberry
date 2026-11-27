@@ -7,6 +7,11 @@ import { createBooking, AddBookingRequest } from '@/app/services/booking.servce'
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useTranslations, useLocale } from "next-intl"
+// import type { Metadata } from 'next';
+
+// type Props = {
+//     params: Promise<{slug: string}>;
+// }
 
 type BookingFormState = {
     fullname: string;
@@ -25,6 +30,78 @@ const defaultBookingForm: BookingFormState = {
     time: '',
     quantity: 1,
 };
+
+// export const metadata: Metadata = {
+//   metadataBase: new URL('https://hanberry.minab.et'),
+//   title: {
+//     default: 'Professional Makeup Artist | Addis Ababa, Ethiopia',
+//     template: '%s | Hamneal Nebiyu Makeup',
+//   },
+//   description: "Professional makeup services for bridal, editorial, and special events in Addis Ababa, Ethiopia. View portfolio and book packages.",
+//   keywords: [
+//     "makeup",
+//     "beauty",
+//     "Ethiopian makeup artist",
+//     "Ethiopian",
+//     "bridal makeup",
+//     "natural makeup",
+//     "glamorous makeup",
+//     "cultural makeup",
+//     "editorial makeup",
+//     "makeup styles",
+//     "makeup looks",
+//     "makeup inspiration",
+//     "makeup transformation",
+//     "addis ababa makeup",
+//     "ethiopia makeup",
+//   ],
+//   openGraph: {
+//     type: 'website',
+//     locale:'en_US',
+//     url: '/',
+//     siteName: 'Hanberry Makeup',
+//     images: [{
+//       url: '/images/HanBerry BEAUTY.png',
+//       width: 1200,
+//       height: 630,
+//       alt: 'Hanberry Makeup - Professional Makeup Artist in Addis Ababa, Ethiopia',
+//     }]
+//   }
+// };
+
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//     const { slug } = await params;
+//     const categorySlug = Array.isArray(slug) ? slug[0] : slug ?? "";
+//     return {
+//         title: categorySlug,
+//         description: `Book ${categorySlug} makeup services with Hamneal Nebiyu in Addis Ababa, Ethiopia. Explore packages and schedule your appointment.`,
+//         openGraph: {
+//             images: [{
+//                 url: `/images/HanBerry BEAUTY.png`,
+//                 width: 1200,
+//                 height: 630,
+//                 alt: 'Hanberry Makeup - Professional Makeup Artist in Addis Ababa, Ethiopia',
+//             }]
+//         }
+//     }
+// }
+
+// export function generateMetadata() {
+//     // const { slug } = await params;
+//     // const categorySlug = Array.isArray(slug) ? slug[0] : slug ?? "";
+//     return {
+//         title: "Hanberry Beauty | Book your makeup now",
+//         description: `Book makeup services with Hamneal Nebiyu in Addis Ababa, Ethiopia. Explore packages and schedule your appointment.`,
+//         openGraph: {
+//             images: [{
+//                 url: `/images/HanBerry BEAUTY.png`,
+//                 width: 1200,
+//                 height: 630,
+//                 alt: 'Hanberry Makeup - Professional Makeup Artist in Addis Ababa, Ethiopia',
+//             }]
+//         }
+//     }
+// }
 
 const Stepper = ({ currentStep }: { currentStep: number }) => {
     const steps = [
