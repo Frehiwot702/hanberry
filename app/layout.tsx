@@ -14,10 +14,11 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL('https://hanberry.minab.et'),
   title: {
-    default: 'Professional Makeup Artist | Addis Ababa, Ethiopia',
+    default: 'Hanberry Beauty',
     template: '%s | Hamneal Nebiyu Makeup',
   },
   description: "Professional makeup services for bridal, editorial, and special events in Addis Ababa, Ethiopia. View portfolio and book packages.",
+  applicationName: 'Hanberry Beauty',
   keywords: [
     "makeup",
     "beauty",
@@ -43,18 +44,36 @@ export const metadata: Metadata = {
     "addis ababa makeup",
     "ethiopia makeup",
   ],
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     type: 'website',
     locale:'en_US',
     url: '/',
     siteName: 'Hanberry Makeup',
+    description: "Professional makeup services for bridal, editorial, and special events in Addis Ababa, Ethiopia. View portfolio and book packages.",
     images: [{
       url: '/images/HanBerry BEAUTY.png',
       width: 1200,
       height: 630,
       alt: 'Hanberry Makeup - Professional Makeup Artist in Addis Ababa, Ethiopia',
     }]
-  }
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hanberry Beauty | Hamneal Nebiyu',
+    description: 'Professional makeup artistry in Addis Ababa, Ethiopia.',
+    images: ['/images/HanBerry BEAUTY.png'],
+  },
 };
 
 export default async function RootLayout({

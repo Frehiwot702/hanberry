@@ -16,24 +16,30 @@ export default function Home() {
   // for local SEO
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'EthiopianBeautySalon',
+    '@type': 'LocalBusiness',
     name: 'Hanberry Beauty',
+    alternateName: 'Hamneal Nebiyu Makeup Artist',
     image: 'https://hanberry.minab.et/images/HanBerry BEAUTY.png',
     '@id': 'https://hanberry.minab.et',
     url: 'https://hanberry.minab.et',
-    telephone: '+251 935 71 23 62',
+    telephone: '+251935712362',
     address: {
-      '@type': 'addressLocality',
-      streetAddress: 'Addis Ababa, Ethiopia',
+      '@type': 'PostalAddress',
       addressLocality: 'Addis Ababa',
-      addressRegion: 'Addis Ababa', 
       addressCountry: 'ET',
     },
-    // geo: {
-    //   '@type': 'GeoCoordinates',
-    //   latitude: 40.7128,
-    //   longitude: -74.0060,
-    // },
+    areaServed: {
+      '@type': 'City',
+      name: 'Addis Ababa',
+    },
+    founder: {
+      '@type': 'Person',
+      name: 'Hamneal Nebiyu',
+      jobTitle: 'Professional Makeup Artist',
+    },
+    sameAs: [
+      'https://www.instagram.com/hamneal_nebiyu/',
+    ],
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

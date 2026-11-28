@@ -173,6 +173,8 @@
     "form filling error": "እባክዎ ስምዎን፣ ስልክ ቁጥርዎን፣ የቀጠሮ ቀን እና የሚመርጡትን ሰዓት ይሙሉ።",
     "select package error": "እባክዎ ከማስገባትዎ በፊት ፓኬጅ ይምረጡ።",
     "incorrect phone number format": "እባክዎ በ9 የሚጀምር እና 9 አሃዞች ያሉት ትክክለኛ ስልክ ቁጥር ያስገቡ።",
-    "booking failed message": "ቀጠሮዎን በማስገባት ላይ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።"
+    "booking failed message": "ቀጠሮዎን በማስገባት ላይ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።",
+    "No packages available": "ምንም ፓኬጆች የሉም",
+  "No package description": "በአሁኑ ጊዜ ለዚህ የሜካፕ ፓኬጆች የለም። እባክዎ በቅርቡ ተመልሰው ይመልከቱ።"
   }
 }

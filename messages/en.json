@@ -173,6 +173,8 @@
     "form filling error": "Please fill in your name, phone number, appointment date, and preferred time.",
     "select package error": "Please select a package before submitting",
     "incorrect phone number format": "Please enter a valid phone number starting with 9 and containing 9 digits.",
-    "booking failed message": "There was a problem submitting your booking. Please try again."
+    "booking failed message": "There was a problem submitting your booking. Please try again.",
+    "No packages available": "No packages available",
+    "No package description": "There are currently no makeup packages for this category. Please check back soon."
   }
 }

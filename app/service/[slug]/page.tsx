@@ -329,7 +329,7 @@ const ServiceDetail = () => {
     if (loading) {
         return (
             <div className='min-h-screen flex items-center justify-center bg-white text-black'>
-                Loading...
+                {t("loading")}
             </div>
         );
     }
@@ -342,16 +342,16 @@ const ServiceDetail = () => {
                 <div className='bg-white text-black w-full min-h-screen px-10 py-8'>
                     <Link href='/#services' className='text-black/50 text-lg mb-4 flex items-center gap-3'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-left"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
-                        Back to Services
+                        {t("Back to Services")}
                     </Link>
 
                     <div className='flex flex-col gap-3 mb-10 mt-5'>
-                        <h3 className='first-letter:uppercase text-4xl font-bold'>{categoryTitle} Makeup Packages</h3>
+                        <h3 className='first-letter:uppercase text-4xl font-bold'>{t(categoryTitle)} {t("makeupPackage")}</h3>
                     </div>
 
                     <div className='flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-[#E0BFB8]/10 p-10 text-center'>
-                        <h4 className='text-2xl font-semibold mb-2'>No packages available</h4>
-                        <p className='text-gray-600'>There are currently no makeup packages for this category. Please check back soon.</p>
+                        <h4 className='text-2xl font-semibold mb-2'>{t("No packages available")}</h4>
+                        <p className='text-gray-600'>{t("No package description")}</p>
                     </div>
                 </div>
             </>
@@ -417,11 +417,11 @@ const ServiceDetail = () => {
                                         <div className='relative h-[300px] w-full overflow-hidden'>
                                             <Image
                                                 src={pkg.coverImage}
-                                                alt={pkg.name}
+                                                alt={`${pkg.name} makeup by Hamneal Nebiyu at Hanberry Beauty in Addis Ababa`}
                                                 fill
                                                 className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]'
                                             />
-                                            <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent' />
+                                            <div className='absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent' />
                                             {isSelected && (
                                                 <div className='absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#C9A34E] text-black shadow-lg'>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check"><path d="M20 6 9 17l-5-5" /></svg>
