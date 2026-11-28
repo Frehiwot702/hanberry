@@ -74,6 +74,10 @@ export const metadata: Metadata = {
     description: 'Professional makeup artistry in Addis Ababa, Ethiopia.',
     images: ['/images/HanBerry BEAUTY.png'],
   },
+  verification: {
+    google: 'mar_oJYawv3Zjx_deYE3Was8iaZp-ESPK26H4SxoeaU',
+    // <meta name="google-site-verification" content="mar_oJYawv3Zjx_deYE3Was8iaZp-ESPK26H4SxoeaU" />
+  },
 };
 
 export default async function RootLayout({
